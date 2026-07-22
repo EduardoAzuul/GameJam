@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Carta" format=3 uid="uid://b76ryun8e6b1h"]
+
+[ext_resource type="Script" uid="uid://cda06kyvcc2vt" path="res://Elementos/Scripts/Efecto.gd" id="1_3q1rb"]
+[ext_resource type="Script" uid="uid://d2ww0faavb5d0" path="res://Elementos/Scripts/Carta.gd" id="1_oppri"]
+
+[sub_resource type="Resource" id="Resource_fbi21"]
+script = ExtResource("1_3q1rb")
+tipo = 1
+valor = 3
+metadata/_custom_type_script = "uid://cda06kyvcc2vt"
+
+[resource]
+script = ExtResource("1_oppri")
+nombre = "Defensa"
+descripcion = "Define por 3"
+costo_vida = 1
+efectos = Array[ExtResource("1_3q1rb")]([SubResource("Resource_fbi21")])
+metadata/_custom_type_script = "uid://d2ww0faavb5d0"
