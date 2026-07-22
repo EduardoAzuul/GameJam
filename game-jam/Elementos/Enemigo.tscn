@@ -1,3 +1,11 @@
 [gd_scene format=3 uid="uid://cx6uja82pegax"]
 
+[ext_resource type="Script" uid="uid://b6cbjuhirsu0o" path="res://Elementos/Scripts/Enemigo.gd" id="1_x22yk"]
+
 [node name="Enemy" type="Node2D" unique_id=2109280533]
+script = ExtResource("1_x22yk")
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=725748262]
+position = Vector2(-1, -16)
+color = Color(0.99607843, 0.19215687, 0.3137255, 1)
+polygon = PackedVector2Array(11, 15, 1, 91, 49, 120, 77, 66, 66, 19)
