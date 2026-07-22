@@ -6,6 +6,24 @@
 script = ExtResource("1_x22yk")
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=725748262]
-position = Vector2(-1, -16)
+position = Vector2(5, -9)
 color = Color(0.99607843, 0.19215687, 0.3137255, 1)
 polygon = PackedVector2Array(11, 15, 1, 91, 49, 120, 77, 66, 66, 19)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2026752701]
+
+[node name="UI" type="Control" parent="." unique_id=2082813406]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HPLabel" type="Label" parent="UI" unique_id=1326056651]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="IntentLabel" type="Label" parent="UI" unique_id=2018701449]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
