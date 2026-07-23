@@ -33,10 +33,10 @@ mouse_filter = 2
 
 [node name="Terminar Turno" type="Button" parent="." unique_id=1839179885]
 layout_mode = 0
-offset_left = 105.0
-offset_top = 522.0
-offset_right = 255.0
-offset_bottom = 553.0
+offset_left = 174.0
+offset_top = 448.0
+offset_right = 324.0
+offset_bottom = 479.0
 text = "TERMINAR TURNO"
 script = ExtResource("7_knt55")
 
