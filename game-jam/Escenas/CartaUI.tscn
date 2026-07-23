@@ -1,8 +1,15 @@
 [gd_scene format=3 uid="uid://dldnrsmn7assm"]
 
 [ext_resource type="Script" uid="uid://g8jugrrb0b27" path="res://Elementos/Scripts/Cartas/CartaUI.gd" id="1_4i5nf"]
+[ext_resource type="Script" uid="uid://cda06kyvcc2vt" path="res://Elementos/Scripts/Cartas/Efecto.gd" id="2_poiu5"]
+[ext_resource type="Script" uid="uid://d2ww0faavb5d0" path="res://Elementos/Scripts/Cartas/Carta.gd" id="3_1hwjj"]
+
+[sub_resource type="Resource" id="Resource_3psg5"]
+script = ExtResource("3_1hwjj")
+metadata/_custom_type_script = "uid://d2ww0faavb5d0"
 
 [node name="CartaUi" type="Control" unique_id=1202888900]
+custom_minimum_size = Vector2(121, 160)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -10,6 +17,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_4i5nf")
+datos = SubResource("Resource_3psg5")
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=940937593]
 position = Vector2(6, 0)

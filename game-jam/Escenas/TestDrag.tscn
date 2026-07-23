@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://nfia48ke8810"]
+
+[ext_resource type="Script" uid="uid://dhxwhmmyt7nkn" path="res://Escenas/test_drag.gd" id="1_cb54x"]
+[ext_resource type="PackedScene" uid="uid://cx6uja82pegax" path="res://Elementos/Enemigo.tscn" id="1_r6g4c"]
+[ext_resource type="PackedScene" uid="uid://b7hvu07x0elf7" path="res://Elementos/ManoUI.tscn" id="2_6flhy"]
+[ext_resource type="PackedScene" uid="uid://pjt3eqo7u0n2" path="res://Elementos/VidaUI.tscn" id="4_cb54x"]
+
+[node name="TestDrag" type="Control" unique_id=1555808897]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cb54x")
+
+[node name="ManoUi" parent="." unique_id=1202888900 instance=ExtResource("2_6flhy")]
+layout_mode = 1
+offset_left = 78.0
+offset_top = -14.0
+offset_right = 78.0
+offset_bottom = -14.0
+
+[node name="Enemigo" parent="." unique_id=1229369372 instance=ExtResource("1_r6g4c")]
+position = Vector2(78, -14)
+
+[node name="VidaUi" parent="." unique_id=744999576 instance=ExtResource("4_cb54x")]
+visible = false
+layout_mode = 1

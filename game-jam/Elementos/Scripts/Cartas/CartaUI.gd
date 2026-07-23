@@ -44,6 +44,7 @@ func _on_vida_cambiada(_vida_actual: int, _vida_maxima: int) -> void:
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
+		print("CartaUI _gui_input recibido: ", event.button_index, " pressed=", event.pressed)
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			_iniciar_arrastre()
 			get_viewport().set_input_as_handled()
@@ -58,10 +59,18 @@ func _input(event: InputEvent) -> void:
 
 	elif event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
+			print("CartaUI _input: soltando carta")
 			_soltar_carta()
 
 
 func _iniciar_arrastre() -> void:
+	print("_iniciar_arrastre llamado. datos=", datos, " puede_pagar=", VidaManager.puede_pagar_costo(datos.costo_vida) if datos else "sin datos")
+	if datos == null or not VidaManager.puede_pagar_costo(datos.costo_vida):
+		print("_iniciar_arrastre: CANCELADO (sin datos o no se puede pagar)")
+		return
+
+	_arrastrando = true
+	print("_iniciar_arrastre: arrastre INICIADO correctamente")
 	if datos == null or not VidaManager.puede_pagar_costo(datos.costo_vida):
 		return
 

@@ -9,25 +9,26 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_632ic")
 
 [node name="BarraVida" type="ProgressBar" parent="." unique_id=297020778]
 layout_mode = 0
-offset_left = 777.0
-offset_top = 1.0
-offset_right = 1152.0
-offset_bottom = 43.0
+offset_left = 736.0
+offset_top = 27.0
+offset_right = 1111.0
+offset_bottom = 69.0
 
 [node name="LabelVida" type="Label" parent="." unique_id=1509506125]
 layout_mode = 0
-offset_left = 1104.0
-offset_top = 10.0
-offset_right = 1144.0
-offset_bottom = 33.0
+offset_left = 1063.0
+offset_top = 36.0
+offset_right = 1103.0
+offset_bottom = 59.0
 
 [node name="LabelEscudo" type="Label" parent="." unique_id=101634228]
 layout_mode = 0
-offset_left = 795.0
-offset_top = 10.0
-offset_right = 835.0
-offset_bottom = 33.0
+offset_left = 754.0
+offset_top = 36.0
+offset_right = 794.0
+offset_bottom = 59.0

@@ -13,14 +13,16 @@ script = ExtResource("1_e6ybn")
 
 [node name="LabelRobo" type="Label" parent="." unique_id=208078462]
 layout_mode = 0
-offset_left = 1097.0
-offset_top = 141.0
-offset_right = 1137.0
-offset_bottom = 164.0
+offset_left = 894.0
+offset_top = 128.0
+offset_right = 992.0
+offset_bottom = 151.0
+text = "LABEL ROBO"
 
 [node name="LabelDescarte" type="Label" parent="." unique_id=441505377]
 layout_mode = 0
-offset_left = 1098.0
-offset_top = 177.0
-offset_right = 1138.0
-offset_bottom = 200.0
+offset_left = 1017.0
+offset_top = 174.0
+offset_right = 1123.0
+offset_bottom = 197.0
+text = "Label Descarte"
