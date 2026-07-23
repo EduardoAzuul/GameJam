@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://b47no4k7iau2w"]
+
+[ext_resource type="Script" uid="uid://cg1e06sp7owjb" path="res://Elementos/skill_check.gd" id="1_slr6i"]
+[ext_resource type="Texture2D" uid="uid://n3b5tkdvnp1o" path="res://icon.svg" id="2_8vyfy"]
+[ext_resource type="Script" uid="uid://cdv702c7pmxcj" path="res://Elementos/zona_exito.gd" id="2_epp7x"]
+
+[node name="DesafioHabilidad" type="Node2D" unique_id=235744248]
+position = Vector2(592, 335)
+
+[node name="SkillCheck" type="Node2D" parent="." unique_id=1480712755]
+script = ExtResource("1_slr6i")
+
+[node name="FondoOscuro" type="ColorRect" parent="SkillCheck" unique_id=1918232790]
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.20871013, 0.20871016, 0.20871013, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="RuedaCompleta" type="Node2D" parent="SkillCheck" unique_id=315349068]
+
+[node name="BaseRueda" type="Sprite2D" parent="SkillCheck/RuedaCompleta" unique_id=1140180218]
+texture = ExtResource("2_8vyfy")
+
+[node name="ZonaExito" type="Node2D" parent="SkillCheck/RuedaCompleta" unique_id=1018181695]
+script = ExtResource("2_epp7x")
+
+[node name="AgujaPivot" type="Node2D" parent="SkillCheck/RuedaCompleta" unique_id=84769274]
+
+[node name="AgujaGrafico" type="Sprite2D" parent="SkillCheck/RuedaCompleta/AgujaPivot" unique_id=1151849009]
+texture = ExtResource("2_8vyfy")
