@@ -18,6 +18,7 @@ func _ready() -> void:
 
 
 func _on_mano_actualizada(mano: Array[Carta]) -> void:
+	# 1. Quitar visuales de cartas que ya no están en la mano
 	for carta in _cartas_visuales.keys():
 		if carta not in mano:
 			var nodo = _cartas_visuales[carta]
@@ -25,17 +26,20 @@ func _on_mano_actualizada(mano: Array[Carta]) -> void:
 				nodo.queue_free()
 			_cartas_visuales.erase(carta)
 
+	# 2. Agregar visuales para cartas nuevas que todavía no tienen nodo
 	for carta in mano:
 		if not _cartas_visuales.has(carta):
 			_instanciar_carta(carta)
 
+	# 3. Reacomodar todas en abanico
 	_reposicionar_mano(mano)
 
 
 func _instanciar_carta(carta: Carta) -> void:
 	var nueva_carta_ui = CARTA_UI_SCENE.instantiate()
-	nueva_carta_ui.datos = carta
 	contenedor.add_child(nueva_carta_ui)
+	nueva_carta_ui.datos = carta
+	nueva_carta_ui.actualizar_visual()
 	_cartas_visuales[carta] = nueva_carta_ui
 	nueva_carta_ui.carta_jugada.connect(_on_carta_jugada)
 

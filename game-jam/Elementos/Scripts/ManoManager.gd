@@ -21,10 +21,12 @@ func iniciar_mazo(mazo_inicial: Array[Carta]) -> void:
 
 func robar(cantidad: int = 1) -> void:
 	for i in range(cantidad):
+		if mano.size() >= TAMANO_MANO:
+			break 
 		if pila_robo.is_empty():
 			_reciclar_descarte()
 		if pila_robo.is_empty():
-			break  # no hay más cartas en ningún lado, se detiene
+			break
 		var carta = pila_robo.pop_back()
 		mano.append(carta)
 	pila_robo_actualizada.emit(pila_robo.size())

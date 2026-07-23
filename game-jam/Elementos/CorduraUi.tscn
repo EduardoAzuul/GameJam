@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://bx04pxeq20aai"]
+
+[ext_resource type="Script" uid="uid://ck7ntjhowksvj" path="res://Elementos/Scripts/CorduraUi.gd" id="1_uncxk"]
+
+[node name="CorduraUi" type="Control" unique_id=1569702333]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("1_uncxk")
+
+[node name="BarraCordura" type="ProgressBar" parent="." unique_id=1740006579]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 609.0
+offset_right = 193.0
+offset_bottom = 636.0
+
+[node name="LabelCordura" type="Label" parent="." unique_id=1923434488]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 577.0
+offset_right = 92.0
+offset_bottom = 600.0
+text = "Cordura"

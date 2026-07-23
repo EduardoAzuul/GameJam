@@ -1,21 +1,29 @@
-# PilasUI.gd
+# PilaUI.gd
 extends Control
 
-@onready var label_robo: Label = $LabelRobo
-@onready var label_descarte: Label = $LabelDescarte
+enum TipoPila { ROBO, DESCARTE }
+
+@export var tipo_pila: TipoPila = TipoPila.ROBO
+
+@onready var label_cantidad: Label = $LabelCantidad
+@onready var icono: TextureRect = $Icono
 
 
 func _ready() -> void:
-	ManoManager.pila_robo_actualizada.connect(_on_robo_actualizada)
-	ManoManager.pila_descarte_actualizada.connect(_on_descarte_actualizada)
-
-	_on_robo_actualizada(ManoManager.pila_robo.size())
-	_on_descarte_actualizada(ManoManager.pila_descarte.size())
-
-
-func _on_robo_actualizada(cantidad: int) -> void:
-	label_robo.text = "Mazo: %d" % cantidad
+	if tipo_pila == TipoPila.ROBO:
+		ManoManager.pila_robo_actualizada.connect(_actualizar)
+		_actualizar(ManoManager.pila_robo.size())
+	else:
+		ManoManager.pila_descarte_actualizada.connect(_actualizar)
+		_actualizar(ManoManager.pila_descarte.size())
 
 
-func _on_descarte_actualizada(cantidad: int) -> void:
-	label_descarte.text = "Descarte: %d" % cantidad
+func _actualizar(cantidad: int) -> void:
+	label_cantidad.text = str(cantidad)
+	_pulso()
+
+
+func _pulso() -> void:
+	scale = Vector2(1.3, 1.3)
+	var tween = create_tween()
+	tween.tween_property(self, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_BACK)
