@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://pxbj1dowt46k"]
+
+[ext_resource type="Script" uid="uid://dtlnk8tl45upn" path="res://Elementos/Scripts/game_over.gd" id="1_iicsp"]
+
+[node name="GameOver" type="Control" unique_id=2142477770]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_iicsp")
+
+[node name="Label" type="Label" parent="." unique_id=1308410167]
+layout_mode = 0
+offset_left = 459.0
+offset_top = 165.0
+offset_right = 602.0
+offset_bottom = 188.0
+text = "You have perished"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="." unique_id=1768637822]
+layout_mode = 0
+offset_left = 441.0
+offset_top = 260.0
+offset_right = 622.0
+offset_bottom = 309.0
+text = "Persevere"
+
+[connection signal="pressed" from="Button" to="." method="_on_boton_reintentar_pressed"]

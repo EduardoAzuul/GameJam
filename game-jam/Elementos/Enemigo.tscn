@@ -2,7 +2,10 @@
 
 [ext_resource type="Script" uid="uid://b6cbjuhirsu0o" path="res://Elementos/Scripts/Enemigo.gd" id="1_x22yk"]
 
-[node name="Enemy" type="Node2D" unique_id=2109280533]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4l3e8"]
+size = Vector2(83, 111)
+
+[node name="Enemigo" type="Area2D" unique_id=1421579703]
 script = ExtResource("1_x22yk")
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=725748262]
@@ -27,3 +30,7 @@ offset_bottom = 23.0
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=678823441]
+position = Vector2(44.5, 59.5)
+shape = SubResource("RectangleShape2D_4l3e8")

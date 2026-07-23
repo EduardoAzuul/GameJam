@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Carta" format=3 uid="uid://dl5nc5y05uf1e"]
 
-[ext_resource type="Script" uid="uid://cda06kyvcc2vt" path="res://Elementos/Scripts/Efecto.gd" id="1_dnjg8"]
-[ext_resource type="Script" uid="uid://d2ww0faavb5d0" path="res://Elementos/Scripts/Carta.gd" id="1_vso0w"]
+[ext_resource type="Script" uid="uid://cda06kyvcc2vt" path="res://Elementos/Scripts/Cartas/Efecto.gd" id="1_dnjg8"]
+[ext_resource type="Script" uid="uid://d2ww0faavb5d0" path="res://Elementos/Scripts/Cartas/Carta.gd" id="1_vso0w"]
 
 [sub_resource type="Resource" id="Resource_rqg47"]
 script = ExtResource("1_dnjg8")

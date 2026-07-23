@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://pjt3eqo7u0n2"]
+
+[ext_resource type="Script" uid="uid://cwilwxgo4o65q" path="res://Elementos/Scripts/vida_ui.gd" id="1_632ic"]
+
+[node name="VidaUi" type="Control" unique_id=87586354]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
+script = ExtResource("1_632ic")
+
+[node name="BarraVida" type="ProgressBar" parent="." unique_id=1422425199]
+layout_mode = 0
+offset_left = -362.0
+offset_right = 4.0
+offset_bottom = 47.0
+show_percentage = false
+
+[node name="LabelVida" type="Label" parent="." unique_id=813022697]
+layout_mode = 0
+offset_left = -100.0
+offset_top = 4.0
+offset_right = -14.0
+offset_bottom = 42.0
+
+[node name="LabelEscudo" type="Label" parent="." unique_id=1114033125]
+layout_mode = 0
+offset_left = -351.0
+offset_top = 5.0
+offset_right = -279.0
+offset_bottom = 43.0
