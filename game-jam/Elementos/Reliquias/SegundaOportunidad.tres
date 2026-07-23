@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Reliquia" format=3 uid="uid://sg5wmikepdk5"]
+
+[ext_resource type="Script" uid="uid://3r6al6fsv1w0" path="res://Elementos/Scripts/Reliquia.gd" id="1_8x4oe"]
+
+[resource]
+script = ExtResource("1_8x4oe")
+id = "doble_oportunidad"
+nombre = "Second Chance"
+descripcion = "If you fail the Wheel minigame, you get an immediate second attempt with reduced penalty"
+metadata/_custom_type_script = "uid://3r6al6fsv1w0"

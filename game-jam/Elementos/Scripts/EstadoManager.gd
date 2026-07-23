@@ -35,7 +35,8 @@ func obtener_nivel(nombre_estado: String) -> int:
 
 
 func resolver_efectos_de_turno() -> void:
-	aplicar("cordura", -DECAIMIENTO_CORDURA_POR_TURNO)   # 👈 decaimiento pasivo cada turno
+	if not RelicManager.tiene("ancla"):  
+		aplicar("cordura", -DECAIMIENTO_CORDURA_POR_TURNO)
 	_resolver_cordura_pasiva()
 
 

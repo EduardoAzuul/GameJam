@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Reliquia" format=3 uid="uid://ducje61nkadef"]
+
+[ext_resource type="Script" uid="uid://3r6al6fsv1w0" path="res://Elementos/Scripts/Reliquia.gd" id="1_x2huo"]
+
+[resource]
+script = ExtResource("1_x2huo")
+id = "mano_larga"
+nombre = "Long Hand"
+descripcion = "You can hold one additional card in your hand"
+metadata/_custom_type_script = "uid://3r6al6fsv1w0"

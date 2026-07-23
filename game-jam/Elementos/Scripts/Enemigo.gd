@@ -134,6 +134,7 @@ func execute_turn() -> void:
 		Intent.ATTACK:
 			await _animar_ataque()
 			VidaManager.recibir_dano(intent_value, "enemigo")
+			RelicManager.intentar_reflejar(intent_value, self)
 		Intent.DEFEND:
 			await _animar_defensa()
 			block += intent_value

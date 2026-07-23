@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Reliquia" format=3 uid="uid://bjy3ed6egdwdk"]
+
+[ext_resource type="Script" uid="uid://3r6al6fsv1w0" path="res://Elementos/Scripts/Reliquia.gd" id="1_6thhw"]
+
+[resource]
+script = ExtResource("1_6thhw")
+id = "reflejo"
+nombre = "Reflex"
+descripcion = "When you take damage from an attack, there's a 35% chance to reflect 30% of that damage back at the enemy"
+metadata/_custom_type_script = "uid://3r6al6fsv1w0"

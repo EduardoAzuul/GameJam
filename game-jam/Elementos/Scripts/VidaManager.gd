@@ -49,3 +49,10 @@ func modificar_vida_maxima(delta: int, piso_minimo: int = 20) -> void:
 	vida_maxima = max(piso_minimo, vida_maxima + delta)
 	vida_actual = min(vida_actual, vida_maxima)
 	vida_cambiada.emit(vida_actual, vida_maxima)
+	
+
+func resetear_escudo() -> void:
+	if RelicManager.tiene("piel_de_piedra"):
+		return   # no se resetea, la reliquia lo protege
+	escudo = 0
+	escudo_cambiado.emit(escudo)

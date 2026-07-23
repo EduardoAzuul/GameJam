@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Reliquia" format=3 uid="uid://cxn6n41tujs02"]
+
+[ext_resource type="Script" uid="uid://3r6al6fsv1w0" path="res://Elementos/Scripts/Reliquia.gd" id="1_8eyec"]
+
+[resource]
+script = ExtResource("1_8eyec")
+id = "piel_de_piedra"
+nombre = "Stone Skin"
+descripcion = "our block no longer resets at the start of a new turn"
+metadata/_custom_type_script = "uid://3r6al6fsv1w0"
