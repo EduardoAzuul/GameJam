@@ -27,12 +27,12 @@ layout_mode = 1
 layout_mode = 1
 
 [node name="PilasUi" parent="." unique_id=659457491 instance=ExtResource("4_cnyc7")]
-visible = false
 layout_mode = 1
+mouse_filter = 2
 
 [node name="GameOver" parent="." unique_id=1739118516 instance=ExtResource("5_cnyc7")]
-visible = false
 layout_mode = 1
+mouse_filter = 2
 
 [node name="Terminar Turno" type="Button" parent="." unique_id=1839179885]
 layout_mode = 0
