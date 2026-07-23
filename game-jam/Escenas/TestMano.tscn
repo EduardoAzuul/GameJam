@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://pjt3eqo7u0n2" path="res://Elementos/VidaUI.tscn" id="4_poiia"]
 [ext_resource type="PackedScene" uid="uid://pxbj1dowt46k" path="res://Elementos/GameOver.tscn" id="5_cnyc7"]
 [ext_resource type="Script" uid="uid://wkkjr6c60crt" path="res://Elementos/Scripts/BotonTerminarTurno.gd" id="7_knt55"]
+[ext_resource type="PackedScene" uid="uid://bx04pxeq20aai" path="res://Elementos/CorduraUi.tscn" id="8_uyhjw"]
 
 [node name="TestMano" type="Control" unique_id=1202888900]
 layout_mode = 3
@@ -26,13 +27,9 @@ layout_mode = 1
 [node name="VidaUi" parent="." unique_id=735700589 instance=ExtResource("4_poiia")]
 layout_mode = 1
 
-[node name="PilasUi" parent="." unique_id=659457491 instance=ExtResource("4_cnyc7")]
-visible = false
-layout_mode = 1
-
 [node name="GameOver" parent="." unique_id=1739118516 instance=ExtResource("5_cnyc7")]
-visible = false
 layout_mode = 1
+mouse_filter = 2
 
 [node name="Terminar Turno" type="Button" parent="." unique_id=1839179885]
 layout_mode = 0
@@ -42,3 +39,25 @@ offset_right = 255.0
 offset_bottom = 553.0
 text = "TERMINAR TURNO"
 script = ExtResource("7_knt55")
+
+[node name="PilaRobo" parent="." unique_id=178100638 instance=ExtResource("4_cnyc7")]
+layout_mode = 1
+offset_left = -43.0
+offset_top = 2.0
+offset_right = -43.0
+offset_bottom = 2.0
+
+[node name="PilaDescarte" parent="." unique_id=1942804513 instance=ExtResource("4_cnyc7")]
+layout_mode = 1
+offset_left = 5.0
+offset_top = 45.0
+offset_right = 5.0
+offset_bottom = 45.0
+tipo_pila = 1
+
+[node name="CorduraUi" parent="." unique_id=1569702333 instance=ExtResource("8_uyhjw")]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 45.0
+offset_right = 5.0
+offset_bottom = 45.0

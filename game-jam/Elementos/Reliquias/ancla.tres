@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Reliquia" format=3 uid="uid://dfnmgrx4ger1d"]
+
+[ext_resource type="Script" uid="uid://3r6al6fsv1w0" path="res://Elementos/Scripts/Reliquia.gd" id="1_tx2de"]
+
+[resource]
+script = ExtResource("1_tx2de")
+id = "ancla"
+nombre = "Anchor"
+descripcion = "Your Sanity no longer decays with the simple passing of turns. Only something — or someone — can take it from you now."
+metadata/_custom_type_script = "uid://3r6al6fsv1w0"

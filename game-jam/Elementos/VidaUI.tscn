@@ -18,13 +18,14 @@ offset_left = 736.0
 offset_top = 27.0
 offset_right = 1111.0
 offset_bottom = 69.0
+show_percentage = false
 
 [node name="LabelVida" type="Label" parent="." unique_id=1509506125]
 layout_mode = 0
-offset_left = 1063.0
-offset_top = 36.0
-offset_right = 1103.0
-offset_bottom = 59.0
+offset_left = 1035.0
+offset_top = 38.0
+offset_right = 1075.0
+offset_bottom = 61.0
 
 [node name="LabelEscudo" type="Label" parent="." unique_id=101634228]
 layout_mode = 0

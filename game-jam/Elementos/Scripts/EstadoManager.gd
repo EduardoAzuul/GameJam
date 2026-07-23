@@ -2,14 +2,22 @@
 extends Node
 
 signal estado_cambiado(nombre_estado: String, nivel_actual: int, nivel_max: int)
+signal panico_activado
+signal panico_desactivado
+signal carta_corrompida(carta: Carta, carta_original: Carta)
 
 const NIVEL_MAXIMO := 10
 const NIVEL_MINIMO := 0
+const UMBRAL_PANICO := 0
+const UMBRAL_CORRUPCION := 4
+const DECAIMIENTO_CORDURA_POR_TURNO := 1   # 👈 nuevo: cuánto baja cada fin de turno
 
 var estados: Dictionary = {
-	"hambre": 0,
-	"cordura": 10  # cordura empieza llena, hambre empieza vacía
+	"cordura": 10
 }
+
+var en_panico: bool = false
+
 
 func aplicar(nombre_estado: String, delta: int) -> void:
 	if not estados.has(nombre_estado):
@@ -18,22 +26,53 @@ func aplicar(nombre_estado: String, delta: int) -> void:
 	estados[nombre_estado] = clamp(estados[nombre_estado] + delta, NIVEL_MINIMO, NIVEL_MAXIMO)
 	estado_cambiado.emit(nombre_estado, estados[nombre_estado], NIVEL_MAXIMO)
 
+	if nombre_estado == "cordura":
+		_revisar_panico()
+
+
 func obtener_nivel(nombre_estado: String) -> int:
 	return estados.get(nombre_estado, 0)
 
+
 func resolver_efectos_de_turno() -> void:
-	_resolver_hambre()
-	_resolver_cordura()
+	if not RelicManager.tiene("ancla"):  
+		aplicar("cordura", -DECAIMIENTO_CORDURA_POR_TURNO)
+	_resolver_cordura_pasiva()
 
-func _resolver_hambre() -> void:
-	var nivel = estados["hambre"]
-	if nivel >= 7:
-		VidaManager.modificar_vida_maxima(-2, 20)  # hambre alta reduce vida máxima
-	elif nivel >= 4:
-		VidaManager.modificar_vida_maxima(-1, 20)
 
-func _resolver_cordura() -> void:
-	var nivel = estados["cordura"]
-	# a menor cordura, más difícil el minijuego de la Rueda (esto lo lee RuedaManager directamente)
-	if nivel <= 2:
-		VidaManager.recibir_dano(2, "cordura_baja")  # ejemplo: pánico daña un poco
+func _resolver_cordura_pasiva() -> void:
+	if en_panico:
+		VidaManager.recibir_dano(3, "panico")
+
+
+func _revisar_panico() -> void:
+	var cordura = estados["cordura"]
+	if cordura <= UMBRAL_PANICO and not en_panico:
+		en_panico = true
+		panico_activado.emit()
+	elif cordura > UMBRAL_PANICO and en_panico:
+		en_panico = false
+		panico_desactivado.emit()
+
+
+func intentar_corromper(carta: Carta) -> Carta:
+	var cordura = estados["cordura"]
+	if cordura > UMBRAL_CORRUPCION:
+		return carta
+
+	var probabilidad = (UMBRAL_CORRUPCION - cordura) / float(UMBRAL_CORRUPCION)
+	if randf() > probabilidad:
+		return carta
+
+	var corrupta = _generar_version_corrupta(carta)
+	carta_corrompida.emit(corrupta, carta)
+	return corrupta
+
+
+func _generar_version_corrupta(carta: Carta) -> Carta:
+	var copia = carta.duplicate(true)
+	copia.nombre = carta.nombre + " (corrupta)"
+	for efecto in copia.efectos:
+		if efecto.tipo == Efecto.TipoEfecto.ATACAR or efecto.tipo == Efecto.TipoEfecto.CURAR:
+			efecto.valor = max(1, int(efecto.valor * 0.5))
+	return copia

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Reliquia" format=3 uid="uid://b5b5nhwgxt7mu"]
+
+[ext_resource type="Script" uid="uid://3r6al6fsv1w0" path="res://Elementos/Scripts/Reliquia.gd" id="1_1wk3f"]
+
+[resource]
+script = ExtResource("1_1wk3f")
+id = "primer_golpe"
+nombre = "Bloody fists"
+descripcion = "Firts attack will deal extra 50% damage"
+metadata/_custom_type_script = "uid://3r6al6fsv1w0"

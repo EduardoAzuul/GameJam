@@ -16,35 +16,32 @@ func registrar_enemigo(enemigo: Enemigo) -> void:
 
 func terminar_turno() -> void:
 	if procesando_turno:
-		return  # evita doble-click mientras se procesa
+		return
 	if VidaManager.vida_actual <= 0:
-		return  # ya está muerto, no hacer nada más
+		return
 
 	procesando_turno = true
 
-	# 1. Descartar cartas no jugadas
 	ManoManager.descartar_mano_completa()
 
-	# 2. Costo fijo de terminar turno
 	VidaManager.recibir_dano(COSTO_TERMINAR_TURNO, "fin_de_turno")
 	if VidaManager.vida_actual <= 0:
 		procesando_turno = false
 		return
 
-	# 3. Turno del enemigo
 	if enemigo_actual != null and is_instance_valid(enemigo_actual):
-		enemigo_actual.execute_turn()
+		await enemigo_actual.execute_turn()
 	if VidaManager.vida_actual <= 0:
 		procesando_turno = false
 		return
 
-	# 4. Efectos de Hambre/Cordura
 	EstadoManager.resolver_efectos_de_turno()
 	if VidaManager.vida_actual <= 0:
 		procesando_turno = false
 		return
 
-	# 5. Nueva mano
+	VidaManager.resetear_escudo()  
+	RelicManager.reiniciar_turno()
 	ManoManager.rellenar_mano()
 
 	turno_terminado.emit()

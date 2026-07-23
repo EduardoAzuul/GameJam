@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://bx04pxeq20aai"]
+
+[ext_resource type="Script" uid="uid://ck7ntjhowksvj" path="res://Elementos/Scripts/CorduraUi.gd" id="1_uncxk"]
+[ext_resource type="Texture2D" uid="uid://bcw83lvfs16r8" path="res://Assets/CerebroBack.png" id="2_2qmqu"]
+[ext_resource type="Texture2D" uid="uid://gn7gtrvlkst2" path="res://Assets/Cerebro Over.png" id="3_gwdko"]
+[ext_resource type="Texture2D" uid="uid://3c2qkypy2ph1" path="res://Assets/cerebroFill.png" id="4_t11ch"]
+
+[node name="CorduraUi" type="Control" unique_id=1569702333]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("1_uncxk")
+
+[node name="BarraCordura" type="TextureProgressBar" parent="." unique_id=322725774]
+custom_minimum_size = Vector2(40, 40)
+custom_maximum_size = Vector2(100, 100)
+layout_mode = 0
+offset_left = 56.0
+offset_top = 498.0
+offset_right = 156.0
+offset_bottom = 598.0
+scale = Vector2(0.25, 0.25)
+texture_under = ExtResource("2_2qmqu")
+texture_over = ExtResource("3_gwdko")
+texture_progress = ExtResource("4_t11ch")
+
+[node name="LabelCordura" type="Label" parent="." unique_id=1923434488]
+layout_mode = 0
+offset_left = 85.0
+offset_top = 534.0
+offset_right = 149.0
+offset_bottom = 557.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "Cordura"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cjjls5ycj47fm"]
 
 [ext_resource type="Script" uid="uid://behcpplm0jd54" path="res://Elementos/Scripts/pilas_ui.gd" id="1_e6ybn"]
+[ext_resource type="Texture2D" uid="uid://n3b5tkdvnp1o" path="res://icon.svg" id="2_pfrpl"]
 
 [node name="PilasUi" type="Control" unique_id=1202888900]
 layout_mode = 3
@@ -9,20 +10,22 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_e6ybn")
 
-[node name="LabelRobo" type="Label" parent="." unique_id=208078462]
+[node name="LabelCantidad" type="Label" parent="." unique_id=1316752822]
 layout_mode = 0
-offset_left = 894.0
-offset_top = 128.0
-offset_right = 992.0
-offset_bottom = 151.0
-text = "LABEL ROBO"
+offset_left = 1018.0
+offset_top = 146.0
+offset_right = 1134.0
+offset_bottom = 169.0
+text = "Label Cantidad"
 
-[node name="LabelDescarte" type="Label" parent="." unique_id=441505377]
+[node name="Icono" type="TextureRect" parent="." unique_id=640940833]
 layout_mode = 0
-offset_left = 1017.0
-offset_top = 174.0
-offset_right = 1123.0
-offset_bottom = 197.0
-text = "Label Descarte"
+offset_left = 949.0
+offset_top = 134.0
+offset_right = 998.0
+offset_bottom = 175.0
+texture = ExtResource("2_pfrpl")
+expand_mode = 1

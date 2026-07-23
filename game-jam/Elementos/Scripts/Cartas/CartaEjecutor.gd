@@ -7,7 +7,8 @@ func jugar_carta(carta: Carta, enemigo_objetivo: Node) -> bool:
 	for efecto in carta.efectos:
 		match efecto.tipo:
 			Efecto.TipoEfecto.ATACAR:
-				enemigo_objetivo.recibir_dano(efecto.valor)
+				var valor_final = RelicManager.calcular_dano_con_primer_golpe(efecto.valor)   # 👈
+				enemigo_objetivo.recibir_dano(valor_final)
 			Efecto.TipoEfecto.DEFENDER:
 				VidaManager.ganar_escudo(efecto.valor)
 			Efecto.TipoEfecto.CURAR:
