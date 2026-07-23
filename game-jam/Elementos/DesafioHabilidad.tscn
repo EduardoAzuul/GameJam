@@ -1,18 +1,23 @@
 [gd_scene format=3 uid="uid://b47no4k7iau2w"]
 
 [ext_resource type="Script" uid="uid://cg1e06sp7owjb" path="res://Elementos/Scripts/skill_check.gd" id="1_slr6i"]
-[ext_resource type="Texture2D" uid="uid://n3b5tkdvnp1o" path="res://icon.svg" id="2_8vyfy"]
+[ext_resource type="Texture2D" uid="uid://b1dj1l6kvjtdq" path="res://Assets/reloj_1.png" id="2_8vyfy"]
 [ext_resource type="Script" uid="uid://cdv702c7pmxcj" path="res://Elementos/Scripts/zona_exito.gd" id="2_epp7x"]
+[ext_resource type="Texture2D" uid="uid://h01yimxpy61a" path="res://Assets/relojAguja.png" id="4_mliuw"]
 
 [node name="DesafioHabilidad" type="Node2D" unique_id=235744248]
-position = Vector2(592, 335)
 
 [node name="SkillCheck" type="Node2D" parent="." unique_id=1480712755]
+position = Vector2(600, 300)
+scale = Vector2(0.2, 0.2)
 script = ExtResource("1_slr6i")
 
 [node name="FondoOscuro" type="ColorRect" parent="SkillCheck" unique_id=1918232790]
+visible = false
 offset_right = 40.0
 offset_bottom = 40.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 color = Color(0.20871013, 0.20871016, 0.20871013, 1)
 metadata/_edit_use_anchors_ = true
 
@@ -27,4 +32,5 @@ script = ExtResource("2_epp7x")
 [node name="AgujaPivot" type="Node2D" parent="SkillCheck/RuedaCompleta" unique_id=84769274]
 
 [node name="AgujaGrafico" type="Sprite2D" parent="SkillCheck/RuedaCompleta/AgujaPivot" unique_id=1151849009]
-texture = ExtResource("2_8vyfy")
+scale = Vector2(1.7, 1.7)
+texture = ExtResource("4_mliuw")

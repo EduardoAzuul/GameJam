@@ -1,7 +1,148 @@
 [gd_scene format=3 uid="uid://bp45mkv4kqc6f"]
 
-[node name="MainMenu" type="Node2D" unique_id=1325103208]
+[ext_resource type="Texture2D" uid="uid://ii14ahdxvqoj" path="res://Assets/fondo.png" id="1_3bb84"]
+[ext_resource type="Script" uid="uid://cpcbdaimqtyia" path="res://Escenas/main_menu.gd" id="1_jg0v5"]
+
+[sub_resource type="FontFile" id="FontFile_3gngh"]
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/32/0/ascent = 0.0
+cache/0/32/0/descent = 0.0
+cache/0/32/0/underline_position = 0.0
+cache/0/32/0/underline_thickness = 0.0
+cache/0/32/0/scale = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uy6a2"]
+bg_color = Color(0.011764706, 0.007843138, 0.007843138, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 5
+
+[node name="MainMenu" type="Control" unique_id=933474592]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jg0v5")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=658295600]
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_3bb84")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=734537510]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 60
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 60
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=370517753]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_constants/separation = 20
+alignment = 2
+
+[node name="PlayButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=474719508]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Jugar"
+flat = true
+
+[node name="SettingsButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1251444882]
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontFile_3gngh")
+theme_override_font_sizes/font_size = 32
+text = "Ajustes"
+flat = true
+
+[node name="ExitButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1592820874]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Salir"
+flat = true
+
+[node name="SettingsPanel" type="Panel" parent="." unique_id=1590228764]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -175.0
+offset_right = 250.0
+offset_bottom = 175.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_uy6a2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsPanel" unique_id=875396520]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -67.5
+offset_top = -21.5
+offset_right = 67.5
+offset_bottom = 21.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="VolumenLabel" type="Label" parent="SettingsPanel/VBoxContainer" unique_id=1119821369]
+layout_mode = 2
+text = "Volumen General"
+horizontal_alignment = 1
+
+[node name="VolumenHSlider" type="HSlider" parent="SettingsPanel/VBoxContainer" unique_id=1130736218]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="CerrarButton" type="Button" parent="SettingsPanel" unique_id=1514675376]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -58.0
+offset_bottom = 31.0
+grow_horizontal = 0
+text = "Cerrar"
+flat = true
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="value_changed" from="SettingsPanel/VBoxContainer/VolumenHSlider" to="." method="_on_volumen_h_slider_value_changed"]
+[connection signal="pressed" from="SettingsPanel/CerrarButton" to="." method="_on_close_settings_button_pressed"]

@@ -1,109 +1,142 @@
 extends Node2D
 
-# Señales para comunicar el resultado al gestor del combate
 signal check_finished(success: bool)
 
-# --- Configuración ---
-@export var rotation_speed: float = 300.0 # Grados por segundo
-@export var zone_size_degrees: float = 40.0 # Tamaño de la zona de éxito
-@export var great_success_multiplier: float = 0.2 # % de la zona que es "Excelente"
+# --- Variables de Configuración ---
+@export var rotation_speed: float = 300.0
 
 # --- Variables de Estado ---
 var is_active: bool = false
-var target_angle_start: float = 0.0
-var target_angle_end: float = 0.0
 var current_rotation: float = 0.0
+var move_direction: int = 1 
+var zonas: Array = []
+var limite_fallo_superior: float = 720.0 # ¡Aumentado a 2 vueltas completas!
+var limite_fallo_inferior: float = -10.0
 
-# --- Referencias ---
+# --- Referencias a los Nodos ---
 @onready var aguja_pivot = $RuedaCompleta/AgujaPivot
 @onready var zona_exito_nodo = $RuedaCompleta/ZonaExito
 
 func _ready():
-	# Por defecto, la escena está oculta y desactivada
 	hide()
 	set_process(false)
 
-# --- Iniciar el Minijuego ---
 func start_check():
-	# 1. Resetear variables
 	is_active = true
 	current_rotation = 0.0
+	move_direction = 1 
 	aguja_pivot.rotation_degrees = 0.0
+	zonas.clear()
 	
-	# 2. Decidir aleatoriamente dónde empieza la zona de éxito
-	# Evitamos los primeros 60 grados para dar tiempo a reaccionar
-	target_angle_start = randf_range(60.0, 360.0 - zone_size_degrees - 20.0)
-	target_angle_end = target_angle_start + zone_size_degrees
+	# Reiniciamos los límites para dar 2 vueltas completas (720 grados)
+	limite_fallo_superior = 720.0
+	limite_fallo_inferior = -10.0
 	
-	# 3. Pedir al nodo de zona que se dibuje (ver punto 3 abajo)
-	zona_exito_nodo.queue_redraw() 
+	# 1. Zona NORMAL
+	var normal_start = randf_range(60.0, 230.0)
+	var normal_size = 45.0
+	zonas.append({
+		"tipo": "normal",
+		"start": normal_start,
+		"end": normal_start + normal_size,
+		"color": Color(1, 1, 1, 0.6) # Blanco semitransparente
+	})
 	
-	# 4. Mostrar y activar actualización
+	# 2. Zona PERFECTA
+	var perfect_size = 12.0
+	var perfect_start = normal_start + normal_size 
+	zonas.append({
+		"tipo": "perfect",
+		"start": perfect_start,
+		"end": perfect_start + perfect_size,
+		"color": Color(0, 1, 0, 0.8) # Verde brillante
+	})
+	
+	# 3. Zona REBOTE (Variado y dinámico)
+	if randf() < 0.3:
+		# Generamos un tamaño aleatorio entre 8 y 25 grados para la barra de rebote
+		var rebote_size = randf_range(8.0, 25.0) 
+		# Aseguramos que aparezca antes de la normal y no se encimen
+		var rebote_start = randf_range(15.0, normal_start - rebote_size - 10.0) 
+		
+		zonas.append({
+			"tipo": "rebote",
+			"start": rebote_start,
+			"end": rebote_start + rebote_size,
+			"color": Color(1, 0.8, 0, 0.8) # Amarillo
+		})
+	
+	zona_exito_nodo.queue_redraw()
 	show()
 	set_process(true)
-	print("Prueba de habilidad iniciada. Zona: ", target_angle_start, " - ", target_angle_end)
 
-# --- Bucle de Juego (Rotación) ---
 func _process(delta):
 	if not is_active: return
 	
-	# Avanzar la aguja
-	current_rotation += rotation_speed * delta
+	current_rotation += rotation_speed * move_direction * delta
 	aguja_pivot.rotation_degrees = current_rotation
 	
-	# Si la aguja da una vuelta completa y el jugador no pulsó -> Fallo
-	if current_rotation >= 360.0:
+	# Revisamos si llegó a los 720 grados (2 vueltas) o rebasó su límite inferior
+	if current_rotation >= limite_fallo_superior or current_rotation <= limite_fallo_inferior:
 		fail()
 
-# --- Entrada del Jugador ---
 func _input(event):
 	if not is_active: return
 	
-	# Si presiona Espacio (o la acción configurada)
-	if event.is_action_pressed("ui_accept"): # "ui_accept" suele ser Espacio/Enter
-		get_viewport().set_input_as_handled() # Evita que otros sistemas detecten el Espacio
+	if event.is_action_pressed("ui_accept"):
+		get_viewport().set_input_as_handled()
 		check_input()
 
-# --- Lógica de Verificación ---
 func check_input():
-	# Normalizar la rotación actual a 0-360 (por seguridad)
-	var final_angle = fmod(current_rotation, 360.0)
+	# fmod se encarga de convertir 720, 500 o 380 grados siempre a su equivalente de 0 a 360
+	var angle = fmod(current_rotation, 360.0)
 	
-	# Comprobar si está dentro del rango
-	if final_angle >= target_angle_start and final_angle <= target_angle_end:
-		success()
-	else:
-		fail()
-
-# --- Resultados ---
-func success():
-	is_active = false
-	set_process(false)
-	print("¡ÉXITO!")
-	# Aquí conectarías con VidaManager para curar o bloquear daño
-	emit_signal("check_finished", true)
+	if angle < 0:
+		angle += 360.0
+		
+	var zona_tocada = null
 	
-	# Pequeña pausa visual antes de desaparecer (opcional)
-	await get_tree().create_timer(0.3).timeout
-	hide()
+	for i in range(zonas.size() - 1, -1, -1):
+		var z = zonas[i]
+		if angle >= z["start"] and angle <= z["end"]:
+			zona_tocada = z["tipo"]
+			if zona_tocada == "rebote":
+				zonas.remove_at(i)
+				zona_exito_nodo.queue_redraw() 
+			break 
+			
+	match zona_tocada:
+		"perfect":
+			print("¡PERFECTO!")
+			emit_signal("check_finished", true) 
+			end_minigame(Color.GREEN)
+		"normal":
+			print("¡ÉXITO NORMAL!")
+			emit_signal("check_finished", true)
+			end_minigame(Color.WHITE)
+		"rebote":
+			print("¡REBOTE!")
+			move_direction *= -1 
+			# Le damos también el equivalente a 2 vueltas completas de distancia hacia atrás
+			limite_fallo_inferior = current_rotation - 720.0
+		_: 
+			fail()
 
 func fail():
+	print("¡FALLO!")
+	emit_signal("check_finished", false)
+	end_minigame(Color.RED)
+
+func end_minigame(aguja_color: Color):
 	is_active = false
 	set_process(false)
-	print("¡FALLO!")
-	# Importante: según tu diseño, esto DEBE quitar vida
-	# VidaManager.take_damage(5) # Ejemplo
-	emit_signal("check_finished", false)
-	
-	# Efecto visual de fallo (ej. aguja roja) y pausa
-	$RuedaCompleta/AgujaPivot/AgujaGrafico.modulate = Color.RED
-	await get_tree().create_timer(0.5).timeout
-	$RuedaCompleta/AgujaPivot/AgujaGrafico.modulate = Color.WHITE # Reset color
+	$RuedaCompleta/AgujaPivot/AgujaGrafico.modulate = aguja_color
+	await get_tree().create_timer(0.4).timeout
+	$RuedaCompleta/AgujaPivot/AgujaGrafico.modulate = Color.WHITE
 	hide()
 
+# Prueba con F
 func _unhandled_input(event):
-	# Detecta si presionas la tecla F directamente (sin configurar el Input Map)
 	if event is InputEventKey and event.keycode == KEY_F and event.pressed and not event.echo:
-		# Solo lo inicia si no está activo ya
 		if not is_active:
 			start_check()
