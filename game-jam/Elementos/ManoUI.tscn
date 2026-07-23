@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://b7hvu07x0elf7"]
 
 [ext_resource type="Script" uid="uid://dp3er5b2281mm" path="res://Elementos/Scripts/mano_ui.gd" id="1_oktjl"]
-[ext_resource type="PackedScene" uid="uid://dldnrsmn7assm" path="res://Escenas/CartaUI.tscn" id="2_3psg5"]
 
 [node name="ManoUi" type="Control" unique_id=1202888900]
 layout_mode = 3
@@ -12,13 +11,10 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_oktjl")
-carta_ui_scene = ExtResource("2_3psg5")
 
-[node name="ContenedorCartas" type="HBoxContainer" parent="." unique_id=1893111764]
-layout_mode = 0
+[node name="ContenedorCartas" type="Control" parent="." unique_id=413467924]
+anchors_preset = 0
 offset_left = 380.0
 offset_top = 350.0
 offset_right = 951.0
 offset_bottom = 547.0
-theme_override_constants/separation = 120
-alignment = 1

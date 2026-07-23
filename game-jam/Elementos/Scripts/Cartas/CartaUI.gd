@@ -13,13 +13,23 @@ signal carta_descartada_sin_jugar(carta_ui: Control)
 
 var _arrastrando: bool = false
 var _offset_arrastre: Vector2 = Vector2.ZERO
+var _hovering: bool = false
 
-var _padre_original: Node = null
-var _indice_original: int = 0
+var posicion_mano: Vector2 = Vector2.ZERO
+var rotacion_mano: float = 0.0
+
+const ESCALA_NORMAL := Vector2.ONE
+const ESCALA_HOVER := Vector2(1.15, 1.15)
+const ESCALA_ARRASTRE := Vector2(1.25, 1.25)
 
 
 func _ready() -> void:
 	actualizar_visual()
+	pivot_offset = size / 2  # para que escale/rote desde el centro, no la esquina
+
+	mouse_entered.connect(_on_mouse_entered)
+	mouse_exited.connect(_on_mouse_exited)
+
 	VidaManager.vida_cambiada.connect(_on_vida_cambiada)
 	_on_vida_cambiada(VidaManager.vida_actual, VidaManager.vida_maxima)
 
@@ -40,11 +50,41 @@ func _on_vida_cambiada(_vida_actual: int, _vida_maxima: int) -> void:
 	modulate = Color.WHITE if VidaManager.puede_pagar_costo(datos.costo_vida) else Color(1, 0.4, 0.4)
 
 
+# --- POSICIONAMIENTO EN LA MANO (llamado desde ManoUI) ---
+
+func mover_a_posicion_mano(pos: Vector2, rot: float) -> void:
+	posicion_mano = pos
+	rotacion_mano = rot
+	if _arrastrando:
+		return  # no la muevas si el jugador la tiene agarrada
+
+	var tween = create_tween().set_parallel(true)
+	tween.tween_property(self, "position", pos, 0.2).set_trans(Tween.TRANS_BACK)
+	tween.tween_property(self, "rotation", rot, 0.2).set_trans(Tween.TRANS_BACK)
+
+
+# --- HOVER ---
+
+func _on_mouse_entered() -> void:
+	_hovering = true
+	if _arrastrando:
+		return
+	z_index = 5
+	create_tween().tween_property(self, "scale", ESCALA_HOVER, 0.1)
+
+
+func _on_mouse_exited() -> void:
+	_hovering = false
+	if _arrastrando:
+		return
+	z_index = 0
+	create_tween().tween_property(self, "scale", ESCALA_NORMAL, 0.1)
+
+
 # --- DRAG & DROP ---
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
-		print("CartaUI _gui_input recibido: ", event.button_index, " pressed=", event.pressed)
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			_iniciar_arrastre()
 			get_viewport().set_input_as_handled()
@@ -59,42 +99,25 @@ func _input(event: InputEvent) -> void:
 
 	elif event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
-			print("CartaUI _input: soltando carta")
 			_soltar_carta()
 
 
 func _iniciar_arrastre() -> void:
-	print("_iniciar_arrastre llamado. datos=", datos, " puede_pagar=", VidaManager.puede_pagar_costo(datos.costo_vida) if datos else "sin datos")
-	if datos == null or not VidaManager.puede_pagar_costo(datos.costo_vida):
-		print("_iniciar_arrastre: CANCELADO (sin datos o no se puede pagar)")
-		return
-
-	_arrastrando = true
-	print("_iniciar_arrastre: arrastre INICIADO correctamente")
 	if datos == null or not VidaManager.puede_pagar_costo(datos.costo_vida):
 		return
 
 	_arrastrando = true
 	_offset_arrastre = get_global_mouse_position() - global_position
 
-	_padre_original = get_parent()
-	_indice_original = get_index()
-
-	var arbol = get_tree()
-	var pos_guardada = global_position
-
-	_padre_original.remove_child(self)
-	arbol.root.add_child(self)
-	global_position = pos_guardada
-
 	z_index = 10
+	rotation = 0.0  # se endereza mientras se arrastra, más fácil de apuntar
+	create_tween().tween_property(self, "scale", ESCALA_ARRASTRE, 0.1)
 
 
 func _soltar_carta() -> void:
 	if not _arrastrando:
 		return
 	_arrastrando = false
-	z_index = 0
 
 	var objetivo = _buscar_enemigo_bajo_el_mouse()
 
@@ -106,14 +129,13 @@ func _soltar_carta() -> void:
 			queue_free()
 			return
 
-	_volver_al_contenedor()
-
-
-func _volver_al_contenedor() -> void:
-	if get_parent() != null:
-		get_parent().remove_child(self)
-	_padre_original.add_child(self)
-	_padre_original.move_child(self, _indice_original)
+	# vuelve a su lugar en el abanico
+	z_index = 0
+	var escala_final = ESCALA_HOVER if _hovering else ESCALA_NORMAL
+	var tween = create_tween().set_parallel(true)
+	tween.tween_property(self, "scale", escala_final, 0.15)
+	tween.tween_property(self, "position", posicion_mano, 0.2).set_trans(Tween.TRANS_BACK)
+	tween.tween_property(self, "rotation", rotacion_mano, 0.2).set_trans(Tween.TRANS_BACK)
 
 
 func _buscar_enemigo_bajo_el_mouse() -> Node:
