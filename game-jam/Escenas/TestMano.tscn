@@ -1,50 +1,9 @@
 [gd_scene format=3 uid="uid://p4x2vwe1xt7p"]
 
-[ext_resource type="Script" uid="uid://b7fgi3iv6wwfl" path="res://Escenas/test_mano.gd" id="1_wvgle"]
-[ext_resource type="PackedScene" uid="uid://cx6uja82pegax" path="res://Elementos/Enemigo.tscn" id="2_poiia"]
-[ext_resource type="PackedScene" uid="uid://b7hvu07x0elf7" path="res://Elementos/ManoUI.tscn" id="3_cnyc7"]
-[ext_resource type="PackedScene" uid="uid://pjt3eqo7u0n2" path="res://Elementos/VidaUI.tscn" id="4_poiia"]
-[ext_resource type="PackedScene" uid="uid://pxbj1dowt46k" path="res://Elementos/GameOver.tscn" id="5_cnyc7"]
-
-[node name="TestMano" type="Control" unique_id=1177181894]
+[node name="PilasUi" type="Control" unique_id=1202888900]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_wvgle")
-
-[node name="Enemigo" parent="." unique_id=1421579703 instance=ExtResource("2_poiia")]
-position = Vector2(140, 82)
-
-[node name="ManoUi" parent="." unique_id=2086724969 instance=ExtResource("3_cnyc7")]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 503.0
-offset_top = -232.0
-offset_right = -28.0
-offset_bottom = -20.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="VidaUi" parent="." unique_id=87586354 instance=ExtResource("4_poiia")]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.541
-anchor_bottom = 0.085
-offset_left = 1141.0
-offset_top = 11.0
-offset_right = 517.768
-offset_bottom = -44.08
-
-[node name="GameOver" parent="." unique_id=2142477770 instance=ExtResource("5_cnyc7")]
-visible = false
-layout_mode = 1
-offset_left = 2.0
-offset_top = 4.0
-offset_right = 2.0
-offset_bottom = 4.0

@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://yl4q2pk376nn"]
 
-[ext_resource type="Script" uid="uid://c7ocj8vnae55i" path="res://Escenas/test_cartas.gd" id="1_e485s"]
-[ext_resource type="PackedScene" uid="uid://cx6uja82pegax" path="res://Elementos/Enemigo.tscn" id="2_esbl0"]
-
-[node name="TestCartas" type="Node2D" unique_id=1223678358]
-script = ExtResource("1_e485s")
-
-[node name="Enemigo" parent="." unique_id=2109280533 instance=ExtResource("2_esbl0")]
+[node name="PilasUi" type="Control" unique_id=1202888900]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
