@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://b47no4k7iau2w"]
 
-[ext_resource type="Script" uid="uid://cg1e06sp7owjb" path="res://Elementos/skill_check.gd" id="1_slr6i"]
+[ext_resource type="Script" uid="uid://cg1e06sp7owjb" path="res://Elementos/Scripts/skill_check.gd" id="1_slr6i"]
 [ext_resource type="Texture2D" uid="uid://n3b5tkdvnp1o" path="res://icon.svg" id="2_8vyfy"]
-[ext_resource type="Script" uid="uid://cdv702c7pmxcj" path="res://Elementos/zona_exito.gd" id="2_epp7x"]
+[ext_resource type="Script" uid="uid://cdv702c7pmxcj" path="res://Elementos/Scripts/zona_exito.gd" id="2_epp7x"]
 
 [node name="DesafioHabilidad" type="Node2D" unique_id=235744248]
 position = Vector2(592, 335)
