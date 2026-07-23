@@ -20,6 +20,7 @@ VidaManager="*uid://c2dtaqnq04qg5"
 CartaEjecutor="*uid://8mkdqx121uwd"
 ManoManager="*uid://15ux0jlbvgt0"
 EstadoManager="*uid://cqlv1s80dn62y"
+TurnoManager="*uid://datyblgqrx4fc"
 
 [display]
 

@@ -1,9 +1,45 @@
 [gd_scene format=3 uid="uid://dldnrsmn7assm"]
 
-[node name="PilasUi" type="Control" unique_id=1202888900]
+[ext_resource type="Script" uid="uid://g8jugrrb0b27" path="res://Elementos/Scripts/Cartas/CartaUI.gd" id="1_4i5nf"]
+
+[node name="CartaUi" type="Control" unique_id=1202888900]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_4i5nf")
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=940937593]
+position = Vector2(6, 0)
+color = Color(0.3019608, 0.41568628, 1, 1)
+polygon = PackedVector2Array(-1, -2, 163, -1, 168, 239, 3, 236)
+
+[node name="Nombre" type="Label" parent="." unique_id=636986666]
+layout_mode = 0
+offset_right = 171.0
+offset_bottom = 23.0
+text = "Nombre"
+horizontal_alignment = 1
+
+[node name="Costo" type="Label" parent="." unique_id=1063623702]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 206.0
+offset_right = 79.0
+offset_bottom = 229.0
+text = "Costo"
+
+[node name="Descripcion" type="Label" parent="." unique_id=1221761247]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 28.0
+offset_right = 168.0
+offset_bottom = 102.0
+text = "Descripcion"
+
+[node name="Icono" type="TextureRect" parent="." unique_id=1694437719]
+layout_mode = 0
+offset_right = 173.0
+offset_bottom = 243.0

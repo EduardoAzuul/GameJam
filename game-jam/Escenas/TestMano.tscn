@@ -1,9 +1,32 @@
 [gd_scene format=3 uid="uid://p4x2vwe1xt7p"]
 
-[node name="PilasUi" type="Control" unique_id=1202888900]
+[ext_resource type="Script" uid="uid://b7fgi3iv6wwfl" path="res://Escenas/test_mano.gd" id="1_wvgle"]
+[ext_resource type="PackedScene" uid="uid://cx6uja82pegax" path="res://Elementos/Enemigo.tscn" id="2_poiia"]
+[ext_resource type="PackedScene" uid="uid://b7hvu07x0elf7" path="res://Elementos/ManoUI.tscn" id="3_cnyc7"]
+[ext_resource type="PackedScene" uid="uid://cjjls5ycj47fm" path="res://Elementos/PilasUi.tscn" id="4_cnyc7"]
+[ext_resource type="PackedScene" uid="uid://pjt3eqo7u0n2" path="res://Elementos/VidaUI.tscn" id="4_poiia"]
+[ext_resource type="PackedScene" uid="uid://pxbj1dowt46k" path="res://Elementos/GameOver.tscn" id="5_cnyc7"]
+
+[node name="TestMano" type="Control" unique_id=1202888900]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_wvgle")
+
+[node name="Enemigo" parent="." unique_id=387651461 instance=ExtResource("2_poiia")]
+layout_mode = 1
+
+[node name="ManoUi" parent="." unique_id=1890131480 instance=ExtResource("3_cnyc7")]
+layout_mode = 1
+
+[node name="VidaUi" parent="." unique_id=735700589 instance=ExtResource("4_poiia")]
+layout_mode = 1
+
+[node name="PilasUi" parent="." unique_id=659457491 instance=ExtResource("4_cnyc7")]
+layout_mode = 1
+
+[node name="GameOver" parent="." unique_id=1739118516 instance=ExtResource("5_cnyc7")]
+layout_mode = 1

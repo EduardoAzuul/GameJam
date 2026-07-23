@@ -9,3 +9,5 @@ func _ready() -> void:
 	]
 	ManoManager.iniciar_mazo(mazo)
 	ManoManager.rellenar_mano()
+	
+	TurnoManager.registrar_enemigo($Enemigo)

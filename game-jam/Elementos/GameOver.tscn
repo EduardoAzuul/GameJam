@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://pxbj1dowt46k"]
 
-[node name="PilasUi" type="Control" unique_id=1202888900]
+[node name="GameOver" type="Control" unique_id=1202888900]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
