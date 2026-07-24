@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://k8mf1c6ggcj"]
+
+[ext_resource type="Script" uid="uid://daxarxg6nbldp" path="res://Elementos/Scripts/ripple.gd" id="1_38a8m"]
+
+[node name="Ripple" type="Node2D" unique_id=809858728]
+script = ExtResource("1_38a8m")

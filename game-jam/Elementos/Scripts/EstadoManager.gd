@@ -13,7 +13,13 @@ const UMBRAL_CORRUPCION := 4
 const DECAIMIENTO_CORDURA_POR_TURNO := 1   # 👈 nuevo: cuánto baja cada fin de turno
 
 var estados: Dictionary = {
-	"cordura": 10
+	"cordura": 10,
+	"esquiva": 0,
+	"contraataque": 0,
+	"herradura": 0,
+	"debilidad": 0,
+	"fuerza": 0,
+	"vulnerabilidad": 0
 }
 
 var en_panico: bool = false
@@ -35,8 +41,11 @@ func obtener_nivel(nombre_estado: String) -> int:
 
 
 func resolver_efectos_de_turno() -> void:
-	if not RelicManager.tiene("ancla"):  
+	if not RelicManager.tiene("ancla"):
 		aplicar("cordura", -DECAIMIENTO_CORDURA_POR_TURNO)
+	for estado in ["debilidad", "fuerza", "vulnerabilidad"]:
+		if estados[estado] > 0:
+			aplicar(estado, -1)
 	_resolver_cordura_pasiva()
 
 

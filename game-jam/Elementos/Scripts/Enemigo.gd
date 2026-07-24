@@ -28,6 +28,7 @@ var block: int = 0
 var current_intent: Intent
 var intent_value: int = 0
 var esta_muerto: bool = false
+var estados_enemigo: Dictionary = {}
 
 @onready var hp_label = $UI/HPLabel
 @onready var intent_label = $UI/IntentLabel
@@ -124,17 +125,45 @@ func decide_next_turn() -> void:
 	_pop_intent()
 
 
+func aplicar_estado(nombre: String, valor: int) -> void:
+	estados_enemigo[nombre] = max(0, estados_enemigo.get(nombre, 0) + valor)
+
+
+func tiene_estado(nombre: String) -> bool:
+	return estados_enemigo.get(nombre, 0) > 0
+
+
+func resolver_estados() -> void:
+	var veneno = estados_enemigo.get("veneno", 0)
+	if veneno > 0:
+		recibir_dano(veneno)
+	for nombre in estados_enemigo.keys():
+		estados_enemigo[nombre] = max(0, estados_enemigo[nombre] - 1)
+
+
 func execute_turn() -> void:
 	if esta_muerto:
 		return
+	resolver_estados()
 	block = 0
 	_pausar_idle()
 
 	match current_intent:
 		Intent.ATTACK:
+			var dano = intent_value
+			if tiene_estado("debilidad"):
+				dano = max(1, int(dano * 0.5))
+			if EstadoManager.obtener_nivel("vulnerabilidad") > 0:
+				dano = int(dano * 1.5)
 			await _animar_ataque()
-			VidaManager.recibir_dano(intent_value, "enemigo")
-			RelicManager.intentar_reflejar(intent_value, self)
+			if EstadoManager.obtener_nivel("esquiva") > 0:
+				EstadoManager.aplicar("esquiva", -1)
+				if EstadoManager.obtener_nivel("contraataque") > 0:
+					EstadoManager.aplicar("contraataque", -1)
+					recibir_dano(dano)
+			else:
+				VidaManager.recibir_dano(dano, "enemigo")
+				RelicManager.intentar_reflejar(dano, self)
 		Intent.DEFEND:
 			await _animar_defensa()
 			block += intent_value

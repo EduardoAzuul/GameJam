@@ -10,10 +10,13 @@ const CARTA_UI_SCENE: PackedScene = preload("res://Elementos/CartaUI.tscn")
 @onready var contenedor: Control = $ContenedorCartas
 
 var _cartas_visuales: Dictionary = {}
+var _cantidad_a_descartar: int = 0
+var _seleccionadas: Array[Control] = []
 
 
 func _ready() -> void:
 	ManoManager.mano_actualizada.connect(_on_mano_actualizada)
+	ManoManager.solicitar_seleccion_descarte.connect(_entrar_modo_descarte)
 	_on_mano_actualizada(ManoManager.mano)
 
 
@@ -49,6 +52,39 @@ func _on_carta_jugada(carta_ui: Control) -> void:
 		if _cartas_visuales[carta] == carta_ui:
 			_cartas_visuales.erase(carta)
 			break
+
+
+func _entrar_modo_descarte(cantidad: int) -> void:
+	_cantidad_a_descartar = cantidad
+	_seleccionadas.clear()
+	for carta_ui in _cartas_visuales.values():
+		carta_ui.modo_descarte = true
+		carta_ui.interactiva = false
+		carta_ui.seleccion_descarte_cambiada.connect(_on_seleccion_cambiada)
+
+
+func _on_seleccion_cambiada(carta_ui: Control, seleccionada: bool) -> void:
+	if seleccionada:
+		if not _seleccionadas.has(carta_ui):
+			_seleccionadas.append(carta_ui)
+	else:
+		_seleccionadas.erase(carta_ui)
+	if _seleccionadas.size() >= _cantidad_a_descartar:
+		_confirmar_descarte()
+
+
+func _confirmar_descarte() -> void:
+	var cartas: Array[Carta] = []
+	for carta_ui in _seleccionadas:
+		if carta_ui.datos != null:
+			cartas.append(carta_ui.datos)
+	for carta_ui in _cartas_visuales.values():
+		if is_instance_valid(carta_ui):
+			carta_ui.resetear_modo_descarte()
+			if carta_ui.seleccion_descarte_cambiada.is_connected(_on_seleccion_cambiada):
+				carta_ui.seleccion_descarte_cambiada.disconnect(_on_seleccion_cambiada)
+	_seleccionadas.clear()
+	ManoManager.confirmar_descarte_elegido(cartas)
 
 
 func _reposicionar_mano(mano: Array[Carta]) -> void:

@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://pjt3eqo7u0n2" path="res://Elementos/VidaUI.tscn" id="4_poiia"]
 [ext_resource type="PackedScene" uid="uid://pxbj1dowt46k" path="res://Elementos/GameOver.tscn" id="5_cnyc7"]
 [ext_resource type="Script" uid="uid://wkkjr6c60crt" path="res://Elementos/Scripts/BotonTerminarTurno.gd" id="7_knt55"]
+[ext_resource type="PackedScene" uid="uid://b47no4k7iau2w" path="res://Elementos/DesafioHabilidad.tscn" id="8_spyk5"]
 [ext_resource type="PackedScene" uid="uid://bx04pxeq20aai" path="res://Elementos/CorduraUi.tscn" id="8_uyhjw"]
 
 [node name="TestMano" type="Control" unique_id=1202888900]
@@ -54,6 +55,9 @@ offset_top = 45.0
 offset_right = 5.0
 offset_bottom = 45.0
 tipo_pila = 1
+
+[node name="DesafioHabilidad" parent="." unique_id=235744248 instance=ExtResource("8_spyk5")]
+position = Vector2(5, 45)
 
 [node name="CorduraUi" parent="." unique_id=1569702333 instance=ExtResource("8_uyhjw")]
 layout_mode = 0

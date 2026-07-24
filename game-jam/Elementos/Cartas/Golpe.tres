@@ -14,3 +14,4 @@ nombre = "Golpe"
 descripcion = "Ataca por 8"
 costo_vida = 3
 efectos = Array[ExtResource("1_jfq45")]([SubResource("Resource_pcqon")])
+requiere_skill_check = true

@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Carta" format=3 uid="uid://c46uikxdattuc"]
+
+[ext_resource type="Script" uid="uid://cda06kyvcc2vt" path="res://Elementos/Scripts/Cartas/Efecto.gd" id="1_efgm"]
+[ext_resource type="Script" uid="uid://d2ww0faavb5d0" path="res://Elementos/Scripts/Cartas/Carta.gd" id="1_ctgm"]
+
+[sub_resource type="Resource" id="Resource_gm1"]
+script = ExtResource("1_efgm")
+valor = 4
+num_golpes = 3
+metadata/_custom_type_script = "uid://cda06kyvcc2vt"
+
+[resource]
+script = ExtResource("1_ctgm")
+nombre = "Golpe Multiple"
+descripcion = "3 golpes de 4, cada uno con su minijuego"
+costo_vida = 3
+efectos = Array[ExtResource("1_efgm")]([SubResource("Resource_gm1")])
+requiere_skill_check = false
+metadata/_custom_type_script = "uid://d2ww0faavb5d0"

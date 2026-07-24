@@ -7,18 +7,26 @@ const TAMANO_MAZO_INICIAL: int = 10
 
 
 func _ready() -> void:
+	VidaManager.vida_maxima = 200
+	VidaManager.vida_actual = 200
+	$Enemigo.max_hp = 200
+	$Enemigo.current_hp = 200
+
 	var cartas_disponibles = _cargar_recursos_de_carpeta(RUTA_CARTAS, "Carta")
 	if cartas_disponibles.is_empty():
 		push_error("No se encontraron cartas .tres en " + RUTA_CARTAS)
 		return
 
-	var mazo: Array[Carta] = _armar_mazo_random(cartas_disponibles, TAMANO_MAZO_INICIAL)
+	var mazo: Array[Carta] = []
+	for carta in cartas_disponibles:
+		mazo.append(carta.duplicate())
 	ManoManager.iniciar_mazo(mazo)
 
 	_agregar_todas_las_reliquias()
 
 	ManoManager.rellenar_mano()
 	TurnoManager.registrar_enemigo($Enemigo)
+	SkillCheckManager.registrar($DesafioHabilidad/SkillCheck)
 
 
 func _cargar_recursos_de_carpeta(ruta: String, tipo_esperado: String) -> Array:
@@ -30,7 +38,7 @@ func _cargar_recursos_de_carpeta(ruta: String, tipo_esperado: String) -> Array:
 		while archivo != "":
 			if archivo.ends_with(".tres"):
 				var recurso = load(ruta + archivo)
-				if recurso != null and recurso.get_class() != "":
+				if recurso != null:
 					if (tipo_esperado == "Carta" and recurso is Carta) or (tipo_esperado == "Reliquia" and recurso is Reliquia):
 						resultado.append(recurso)
 			archivo = dir.get_next()

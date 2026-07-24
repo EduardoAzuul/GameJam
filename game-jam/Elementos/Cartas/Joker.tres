@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="Carta" format=3 uid="uid://cj5k1bp47hmrj"]
+
+[ext_resource type="Script" uid="uid://cda06kyvcc2vt" path="res://Elementos/Scripts/Cartas/Efecto.gd" id="1_efjok"]
+[ext_resource type="Script" uid="uid://d2ww0faavb5d0" path="res://Elementos/Scripts/Cartas/Carta.gd" id="1_ctjok"]
+
+[sub_resource type="Resource" id="Resource_jok1"]
+script = ExtResource("1_efjok")
+tipo = 3
+estado_a_aplicar = "esquiva"
+valor = 1
+metadata/_custom_type_script = "uid://cda06kyvcc2vt"
+
+[sub_resource type="Resource" id="Resource_jok2"]
+script = ExtResource("1_efjok")
+tipo = 3
+estado_a_aplicar = "contraataque"
+valor = 1
+metadata/_custom_type_script = "uid://cda06kyvcc2vt"
+
+[resource]
+script = ExtResource("1_ctjok")
+nombre = "Joker"
+descripcion = "Esquivas el siguiente ataque y lo regresas al enemigo"
+costo_vida = 4
+efectos = Array[ExtResource("1_efjok")]([SubResource("Resource_jok1"), SubResource("Resource_jok2")])
+requiere_skill_check = false

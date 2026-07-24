@@ -16,7 +16,8 @@ metadata/_custom_type_script = "uid://cda06kyvcc2vt"
 
 [resource]
 script = ExtResource("1_vso0w")
-nombre = "Mordisco"
-descripcion = "Ataca por 6 y cura 4"
+nombre = "Mordida"
+descripcion = "Muerde por 6 y cura 4"
 costo_vida = 2
 efectos = Array[ExtResource("1_dnjg8")]([SubResource("Resource_rqg47"), SubResource("Resource_hiyh5")])
+requiere_skill_check = true

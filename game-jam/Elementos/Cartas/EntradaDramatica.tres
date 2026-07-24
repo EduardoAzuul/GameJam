@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="Carta" format=3 uid="uid://sfwjb637wrd2"]
+
+[ext_resource type="Script" uid="uid://cda06kyvcc2vt" path="res://Elementos/Scripts/Cartas/Efecto.gd" id="1_efed"]
+[ext_resource type="Script" uid="uid://d2ww0faavb5d0" path="res://Elementos/Scripts/Cartas/Carta.gd" id="1_cted"]
+
+[sub_resource type="Resource" id="Resource_ed1"]
+script = ExtResource("1_efed")
+tipo = 6
+valor = 3
+metadata/_custom_type_script = "uid://cda06kyvcc2vt"
+
+[sub_resource type="Resource" id="Resource_ed2"]
+script = ExtResource("1_efed")
+valor = 20
+metadata/_custom_type_script = "uid://cda06kyvcc2vt"
+
+[resource]
+script = ExtResource("1_cted")
+nombre = "Entrada Dramatica"
+descripcion = "Solo 1ra carta: descarta 3 a elegir, ataca por 20"
+costo_vida = 2
+efectos = Array[ExtResource("1_efed")]([SubResource("Resource_ed1"), SubResource("Resource_ed2")])
+requiere_skill_check = true
+solo_primera_carta = true
+metadata/_custom_type_script = "uid://d2ww0faavb5d0"

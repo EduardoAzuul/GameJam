@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Carta" format=3 uid="uid://v6d0cq58inpv"]
+
+[ext_resource type="Script" uid="uid://cda06kyvcc2vt" path="res://Elementos/Scripts/Cartas/Efecto.gd" id="1_efvid"]
+[ext_resource type="Script" uid="uid://d2ww0faavb5d0" path="res://Elementos/Scripts/Cartas/Carta.gd" id="1_ctvid"]
+
+[sub_resource type="Resource" id="Resource_vid1"]
+script = ExtResource("1_efvid")
+tipo = 2
+valor = 8
+metadata/_custom_type_script = "uid://cda06kyvcc2vt"
+
+[resource]
+script = ExtResource("1_ctvid")
+nombre = "Vida"
+descripcion = "Cura 8 de vida"
+costo_vida = 2
+efectos = Array[ExtResource("1_efvid")]([SubResource("Resource_vid1")])
+requiere_skill_check = true

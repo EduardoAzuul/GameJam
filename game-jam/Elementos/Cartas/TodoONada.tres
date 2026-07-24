@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Carta" format=3 uid="uid://ocn2ei4b7vhg"]
+
+[ext_resource type="Script" uid="uid://cda06kyvcc2vt" path="res://Elementos/Scripts/Cartas/Efecto.gd" id="1_efton"]
+[ext_resource type="Script" uid="uid://d2ww0faavb5d0" path="res://Elementos/Scripts/Cartas/Carta.gd" id="1_ctton"]
+
+[sub_resource type="Resource" id="Resource_ton1"]
+script = ExtResource("1_efton")
+tipo = 7
+valor = 0
+metadata/_custom_type_script = "uid://cda06kyvcc2vt"
+
+[resource]
+script = ExtResource("1_ctton")
+nombre = "Todo o Nada"
+descripcion = "Descarta toda tu mano y roba la misma cantidad"
+costo_vida = 0
+efectos = Array[ExtResource("1_efton")]([SubResource("Resource_ton1")])
+requiere_skill_check = false
+metadata/_custom_type_script = "uid://d2ww0faavb5d0"

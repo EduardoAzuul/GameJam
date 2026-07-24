@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="Carta" format=3 uid="uid://b3cr2xp15vrco"]
+
+[ext_resource type="Script" uid="uid://cda06kyvcc2vt" path="res://Elementos/Scripts/Cartas/Efecto.gd" id="1_efcor"]
+[ext_resource type="Script" uid="uid://d2ww0faavb5d0" path="res://Elementos/Scripts/Cartas/Carta.gd" id="1_ctcor"]
+
+[sub_resource type="Resource" id="Resource_corte1"]
+script = ExtResource("1_efcor")
+valor = 6
+metadata/_custom_type_script = "uid://cda06kyvcc2vt"
+
+[sub_resource type="Resource" id="Resource_corte2"]
+script = ExtResource("1_efcor")
+tipo = 5
+estado_a_aplicar = "vulnerabilidad"
+valor = 2
+metadata/_custom_type_script = "uid://cda06kyvcc2vt"
+
+[resource]
+script = ExtResource("1_ctcor")
+nombre = "Corte"
+descripcion = "Ataca por 6 y aplica vulnerabilidad"
+costo_vida = 3
+efectos = Array[ExtResource("1_efcor")]([SubResource("Resource_corte1"), SubResource("Resource_corte2")])
+requiere_skill_check = true

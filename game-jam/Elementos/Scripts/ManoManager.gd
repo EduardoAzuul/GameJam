@@ -4,6 +4,8 @@ extends Node
 signal mano_actualizada(cartas_en_mano: Array[Carta])
 signal pila_robo_actualizada(cantidad: int)
 signal pila_descarte_actualizada(cantidad: int)
+signal solicitar_seleccion_descarte(cantidad: int)
+signal descarte_elegido_confirmado
 
 const TAMANO_MANO_BASE: int = 5
 
@@ -62,6 +64,12 @@ func mover_a_descarte(carta: Carta) -> void:
 func descartar_mano_completa() -> void:
 	for carta in mano.duplicate():
 		mover_a_descarte(carta)
+
+
+func confirmar_descarte_elegido(cartas_a_descartar: Array[Carta]) -> void:
+	for carta in cartas_a_descartar:
+		mover_a_descarte(carta)
+	descarte_elegido_confirmado.emit()
 
 
 func _reciclar_descarte() -> void:

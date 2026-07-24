@@ -13,3 +13,4 @@ script = ExtResource("1_530ve")
 nombre = "Golpe Fuerte"
 descripcion = "Ataca por 16"
 efectos = Array[ExtResource("1_te7pu")]([SubResource("Resource_gqt5r")])
+requiere_skill_check = true

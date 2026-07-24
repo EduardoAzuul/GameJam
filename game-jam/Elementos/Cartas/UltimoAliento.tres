@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Carta" format=3 uid="uid://basoopoc73a16"]
+
+[ext_resource type="Script" uid="uid://cda06kyvcc2vt" path="res://Elementos/Scripts/Cartas/Efecto.gd" id="1_efua"]
+[ext_resource type="Script" uid="uid://d2ww0faavb5d0" path="res://Elementos/Scripts/Cartas/Carta.gd" id="1_ctua"]
+
+[sub_resource type="Resource" id="Resource_ua1"]
+script = ExtResource("1_efua")
+valor = 1
+escalado_vida = true
+metadata/_custom_type_script = "uid://cda06kyvcc2vt"
+
+[resource]
+script = ExtResource("1_ctua")
+nombre = "Ultimo Aliento"
+descripcion = "Daño = vida perdida / 2"
+costo_vida = 3
+efectos = Array[ExtResource("1_efua")]([SubResource("Resource_ua1")])
+requiere_skill_check = true
+metadata/_custom_type_script = "uid://d2ww0faavb5d0"

@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="Carta" format=3 uid="uid://dkm4may06gn2d"]
+
+[ext_resource type="Script" uid="uid://cda06kyvcc2vt" path="res://Elementos/Scripts/Cartas/Efecto.gd" id="1_efmal"]
+[ext_resource type="Script" uid="uid://d2ww0faavb5d0" path="res://Elementos/Scripts/Cartas/Carta.gd" id="1_ctmal"]
+
+[sub_resource type="Resource" id="Resource_mal1"]
+script = ExtResource("1_efmal")
+tipo = 3
+estado_a_aplicar = "cordura"
+valor = -3
+metadata/_custom_type_script = "uid://cda06kyvcc2vt"
+
+[sub_resource type="Resource" id="Resource_mal2"]
+script = ExtResource("1_efmal")
+tipo = 5
+estado_a_aplicar = "vulnerabilidad"
+valor = 2
+metadata/_custom_type_script = "uid://cda06kyvcc2vt"
+
+[sub_resource type="Resource" id="Resource_mal3"]
+script = ExtResource("1_efmal")
+tipo = 5
+estado_a_aplicar = "debilidad"
+valor = 2
+metadata/_custom_type_script = "uid://cda06kyvcc2vt"
+
+[resource]
+script = ExtResource("1_ctmal")
+nombre = "Maldicion"
+descripcion = "Reduce cordura, aplica vulnerabilidad y debilidad al enemigo"
+costo_vida = 1
+efectos = Array[ExtResource("1_efmal")]([SubResource("Resource_mal1"), SubResource("Resource_mal2"), SubResource("Resource_mal3")])
+requiere_skill_check = false

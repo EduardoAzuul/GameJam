@@ -15,4 +15,5 @@ nombre = "Defensa"
 descripcion = "Define por 3"
 costo_vida = 1
 efectos = Array[ExtResource("1_3q1rb")]([SubResource("Resource_fbi21")])
+requiere_skill_check = true
 metadata/_custom_type_script = "uid://d2ww0faavb5d0"

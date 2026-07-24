@@ -1,0 +1,34 @@
+[gd_resource type="Resource" script_class="Carta" format=3 uid="uid://b3rs3rk3r456f"]
+
+[ext_resource type="Script" uid="uid://cda06kyvcc2vt" path="res://Elementos/Scripts/Cartas/Efecto.gd" id="1_efber"]
+[ext_resource type="Script" uid="uid://d2ww0faavb5d0" path="res://Elementos/Scripts/Cartas/Carta.gd" id="1_ctber"]
+
+[sub_resource type="Resource" id="Resource_ber1"]
+script = ExtResource("1_efber")
+tipo = 3
+estado_a_aplicar = "fuerza"
+valor = 3
+metadata/_custom_type_script = "uid://cda06kyvcc2vt"
+
+[sub_resource type="Resource" id="Resource_ber2"]
+script = ExtResource("1_efber")
+tipo = 3
+estado_a_aplicar = "cordura"
+valor = -4
+metadata/_custom_type_script = "uid://cda06kyvcc2vt"
+
+[sub_resource type="Resource" id="Resource_ber3"]
+script = ExtResource("1_efber")
+tipo = 3
+estado_a_aplicar = "vulnerabilidad"
+valor = 3
+metadata/_custom_type_script = "uid://cda06kyvcc2vt"
+
+[resource]
+script = ExtResource("1_ctber")
+nombre = "Berserker"
+descripcion = "+100% daño 3 turnos, -4 cordura, eres vulnerable 3 turnos"
+costo_vida = 1
+efectos = Array[ExtResource("1_efber")]([SubResource("Resource_ber1"), SubResource("Resource_ber2"), SubResource("Resource_ber3")])
+requiere_skill_check = false
+metadata/_custom_type_script = "uid://d2ww0faavb5d0"

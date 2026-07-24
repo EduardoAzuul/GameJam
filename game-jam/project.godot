@@ -22,6 +22,7 @@ ManoManager="*uid://15ux0jlbvgt0"
 EstadoManager="*uid://cqlv1s80dn62y"
 TurnoManager="*uid://datyblgqrx4fc"
 RelicManager="*uid://dm2w1g32sjgny"
+SkillCheckManager="*uid://d3togu7y8wxf3"
 
 [display]
 

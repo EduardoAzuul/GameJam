@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Carta" format=3 uid="uid://dx1w81a0rfqr"]
+
+[ext_resource type="Script" uid="uid://cda06kyvcc2vt" path="res://Elementos/Scripts/Cartas/Efecto.gd" id="1_efher"]
+[ext_resource type="Script" uid="uid://d2ww0faavb5d0" path="res://Elementos/Scripts/Cartas/Carta.gd" id="1_ether"]
+
+[sub_resource type="Resource" id="Resource_her1"]
+script = ExtResource("1_efher")
+tipo = 3
+estado_a_aplicar = "herradura"
+valor = 2
+metadata/_custom_type_script = "uid://cda06kyvcc2vt"
+
+[resource]
+script = ExtResource("1_ether")
+nombre = "Herradura"
+descripcion = "Las 2 siguientes cartas: perfect da x3 en vez de x2"
+costo_vida = 2
+efectos = Array[ExtResource("1_efher")]([SubResource("Resource_her1")])
+requiere_skill_check = false
+metadata/_custom_type_script = "uid://d2ww0faavb5d0"

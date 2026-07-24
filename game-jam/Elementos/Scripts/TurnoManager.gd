@@ -8,6 +8,7 @@ const COSTO_TERMINAR_TURNO: int = 3
 
 var enemigo_actual: Enemigo = null
 var procesando_turno: bool = false
+var cartas_jugadas_este_turno: int = 0
 
 
 func registrar_enemigo(enemigo: Enemigo) -> void:
@@ -44,6 +45,7 @@ func terminar_turno() -> void:
 	RelicManager.reiniciar_turno()
 	ManoManager.rellenar_mano()
 
+	cartas_jugadas_este_turno = 0
 	turno_terminado.emit()
 	nuevo_turno_iniciado.emit()
 	procesando_turno = false
