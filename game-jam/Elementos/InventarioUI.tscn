@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://p26ldluoye5y"]
+
+[ext_resource type="Script" uid="uid://dk7wa0ldn5etg" path="res://Elementos/Scripts/inventario_ui.gd" id="1_inv01"]
+
+[node name="InventarioUI" type="CanvasLayer" unique_id=1121016345]
+layer = 10
+script = ExtResource("1_inv01")
+
+[node name="Raiz" type="Control" parent="." unique_id=1632059982]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BotonInventario" type="Button" parent="Raiz" unique_id=303029055]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 83.0
+offset_right = 78.0
+offset_bottom = 147.0
+text = "Mazo"
+
+[node name="PanelDeslizable" type="PanelContainer" parent="Raiz" unique_id=572172546]
+layout_mode = 1
+anchors_preset = -1
+anchor_bottom = 1.0
+offset_right = 430.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Raiz/PanelDeslizable" unique_id=1990179860]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Raiz/PanelDeslizable/MarginContainer" unique_id=1578293884]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Raiz/PanelDeslizable/MarginContainer/VBoxContainer" unique_id=304168944]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TituloLabel" type="Label" parent="Raiz/PanelDeslizable/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1054601673]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 18
+text = "Mazo del Jugador"
+
+[node name="BtnCerrar" type="Button" parent="Raiz/PanelDeslizable/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1349417479]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+text = "X"
+
+[node name="ContadorLabel" type="Label" parent="Raiz/PanelDeslizable/MarginContainer/VBoxContainer" unique_id=1977306485]
+layout_mode = 2
+text = "0 cartas"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Raiz/PanelDeslizable/MarginContainer/VBoxContainer" unique_id=86140643]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="GridCartas" type="GridContainer" parent="Raiz/PanelDeslizable/MarginContainer/VBoxContainer/ScrollContainer" unique_id=1569011429]
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 3
+
+[connection signal="pressed" from="Raiz/BotonInventario" to="." method="_on_boton_inventario_pressed"]
+[connection signal="pressed" from="Raiz/PanelDeslizable/MarginContainer/VBoxContainer/HBoxContainer/BtnCerrar" to="." method="_on_btn_cerrar_pressed"]

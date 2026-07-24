@@ -1,35 +1,45 @@
 [gd_scene format=3 uid="uid://pjt3eqo7u0n2"]
 
 [ext_resource type="Script" uid="uid://cwilwxgo4o65q" path="res://Elementos/Scripts/vida_ui.gd" id="1_632ic"]
+[ext_resource type="Texture2D" uid="uid://8ew84wvc4ofm" path="res://Assets/barra_vida_Superior.png" id="2_3gc75"]
+[ext_resource type="Texture2D" uid="uid://dx35vw1vsijgn" path="res://Assets/barra_vida_Relleno.png" id="3_pwir5"]
 
 [node name="VidaUi" type="Control" unique_id=1202888900]
+custom_maximum_size = Vector2(200, -1)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -1052.0
+offset_bottom = -648.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_632ic")
 
-[node name="BarraVida" type="ProgressBar" parent="." unique_id=297020778]
+[node name="BarraVida" type="TextureProgressBar" parent="." unique_id=481408789]
 layout_mode = 0
-offset_left = 736.0
-offset_top = 27.0
-offset_right = 1111.0
-offset_bottom = 69.0
-show_percentage = false
+offset_left = 713.0
+offset_top = -1.0
+offset_right = 1153.0
+offset_bottom = 172.0
+max_value = 0.0
+nine_patch_stretch = true
+texture_over = ExtResource("2_3gc75")
+texture_progress = ExtResource("3_pwir5")
 
 [node name="LabelVida" type="Label" parent="." unique_id=1509506125]
 layout_mode = 0
-offset_left = 1035.0
-offset_top = 38.0
-offset_right = 1075.0
-offset_bottom = 61.0
+offset_left = 998.0
+offset_top = 21.0
+offset_right = 1038.0
+offset_bottom = 44.0
+text = "VIDA"
 
 [node name="LabelEscudo" type="Label" parent="." unique_id=101634228]
 layout_mode = 0
-offset_left = 754.0
-offset_top = 36.0
-offset_right = 794.0
-offset_bottom = 59.0
+offset_left = 824.0
+offset_top = 22.0
+offset_right = 893.0
+offset_bottom = 45.0
+text = "Escudo"

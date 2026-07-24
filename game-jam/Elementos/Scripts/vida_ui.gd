@@ -1,7 +1,7 @@
 # VidaUI.gd
 extends Control
 
-@onready var barra_vida: ProgressBar = $BarraVida
+@onready var barra_vida: TextureProgressBar = $BarraVida
 @onready var label_vida: Label = $LabelVida
 @onready var label_escudo: Label = $LabelEscudo
 

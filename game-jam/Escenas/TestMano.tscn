@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b7fgi3iv6wwfl" path="res://Escenas/test_mano.gd" id="1_wvgle"]
 [ext_resource type="PackedScene" uid="uid://cx6uja82pegax" path="res://Elementos/Enemigo.tscn" id="2_poiia"]
+[ext_resource type="Texture2D" uid="uid://ii14ahdxvqoj" path="res://Assets/fondo.png" id="2_qqrc2"]
 [ext_resource type="PackedScene" uid="uid://b7hvu07x0elf7" path="res://Elementos/ManoUI.tscn" id="3_cnyc7"]
 [ext_resource type="PackedScene" uid="uid://cjjls5ycj47fm" path="res://Elementos/PilasUi.tscn" id="4_cnyc7"]
 [ext_resource type="PackedScene" uid="uid://pjt3eqo7u0n2" path="res://Elementos/VidaUI.tscn" id="4_poiia"]
@@ -9,6 +10,7 @@
 [ext_resource type="Script" uid="uid://wkkjr6c60crt" path="res://Elementos/Scripts/BotonTerminarTurno.gd" id="7_knt55"]
 [ext_resource type="PackedScene" uid="uid://b47no4k7iau2w" path="res://Elementos/DesafioHabilidad.tscn" id="8_spyk5"]
 [ext_resource type="PackedScene" uid="uid://bx04pxeq20aai" path="res://Elementos/CorduraUi.tscn" id="8_uyhjw"]
+[ext_resource type="PackedScene" uid="uid://p26ldluoye5y" path="res://Elementos/InventarioUI.tscn" id="9_invu1"]
 
 [node name="TestMano" type="Control" unique_id=1202888900]
 layout_mode = 3
@@ -18,6 +20,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_wvgle")
+
+[node name="Fondo" type="Sprite2D" parent="." unique_id=1976987794]
+position = Vector2(574, 323)
+scale = Vector2(0.33999994, 0.327)
+texture = ExtResource("2_qqrc2")
 
 [node name="Enemigo" parent="." unique_id=387651461 instance=ExtResource("2_poiia")]
 position = Vector2(80, 11)
@@ -65,3 +72,7 @@ offset_left = 5.0
 offset_top = 45.0
 offset_right = 5.0
 offset_bottom = 45.0
+
+[node name="InventarioUI" parent="." unique_id=1647203091 instance=ExtResource("9_invu1")]
+
+[node name="Node" type="Node" parent="." unique_id=1224428845]

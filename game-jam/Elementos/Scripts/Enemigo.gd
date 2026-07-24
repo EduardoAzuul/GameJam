@@ -6,19 +6,31 @@ signal enemigo_murio
 signal hp_cambiado(hp_actual: int, hp_maximo: int)
 signal intent_cambiado(intent: Intent, valor: int)
 
-enum Intent { ATTACK, DEFEND, APPLY_STATUS }
+enum Intent { ATTACK, DEFEND, APPLY_STATUS, MULTI_ATTACK, BUFF_SELF, DEBILITAR, COMBO_CARGA }
 
 const DAMAGE_NUMBER_SCENE: PackedScene = preload("res://Escenas/UserInterface/DamageNumber.tscn")
 
 const ICONO_ATAQUE: Texture2D = preload("res://Assets/ATAQUE.png")
 const ICONO_DEFENSA: Texture2D = preload("res://Assets/DEFENSA.png")
 const ICONO_ESTADO: Texture2D = preload("res://Assets/ESTADO.png")
+const ICONO_MULTI: Texture2D = preload("res://Assets/ATAQUE2.png")
 
 const COLOR_ATAQUE := Color(1, 0.35, 0.35)
 const COLOR_DEFENSA := Color(0.35, 0.55, 1)
 const COLOR_ESTADO := Color(0.7, 0.35, 1)
+const COLOR_MULTI := Color(1, 0.55, 0.2)
+const COLOR_BUFF := Color(0.9, 0.8, 0.1)
+const COLOR_DEBILITAR := Color(0.5, 0.2, 0.8)
+const COLOR_COMBO := Color(1, 0.1, 0.1)
 
-const UMBRAL_HP_AGITADO := 0.25  # bajo este % de HP, la respiración se acelera
+const UMBRAL_HP_AGITADO := 0.25
+const UMBRAL_FASE_2 := 0.50
+const UMBRAL_FASE_3 := 0.25
+
+# Patrones de intents por fase (se ciclan), inicializados en _ready()
+var PATRON_FASE_0: Array = []
+var PATRON_FASE_1: Array = []
+var PATRON_FASE_2: Array = []
 
 @export var max_hp: int = 40
 @export var estado_a_aplicar: String = "cordura"
@@ -29,6 +41,10 @@ var current_intent: Intent
 var intent_value: int = 0
 var esta_muerto: bool = false
 var estados_enemigo: Dictionary = {}
+
+var _fase_actual: int = 0
+var _patron_indice: int = 0
+var _combo_cargado: bool = false
 
 @onready var hp_label = $UI/HPLabel
 @onready var intent_label = $UI/IntentLabel
@@ -47,6 +63,10 @@ func _ready() -> void:
 	_pos_base = sprite.position
 	_material_sprite = sprite.material as ShaderMaterial
 
+	PATRON_FASE_0 = [Intent.ATTACK, Intent.DEFEND, Intent.APPLY_STATUS, Intent.ATTACK]
+	PATRON_FASE_1 = [Intent.ATTACK, Intent.ATTACK, Intent.MULTI_ATTACK, Intent.DEFEND]
+	PATRON_FASE_2 = [Intent.BUFF_SELF, Intent.ATTACK, Intent.COMBO_CARGA, Intent.DEBILITAR, Intent.ATTACK]
+
 	decide_next_turn()
 	update_ui()
 	_iniciar_idle()
@@ -62,7 +82,7 @@ func _iniciar_idle() -> void:
 	var amplitud_escala = 1.02
 
 	if current_hp < max_hp * UMBRAL_HP_AGITADO:
-		duracion = 0.7          # respiración agitada solo cerca de la muerte
+		duracion = 0.7
 		amplitud_escala = 1.05
 
 	_tween_idle = create_tween().set_loops()
@@ -109,17 +129,76 @@ func _pulso_paranormal_temporal() -> void:
 	)
 
 
+# --- FASES Y PATRONES ---
+
+func _verificar_cambio_fase() -> void:
+	var ratio = float(current_hp) / float(max_hp)
+	var nueva_fase: int
+	if ratio <= UMBRAL_FASE_3:
+		nueva_fase = 2
+	elif ratio <= UMBRAL_FASE_2:
+		nueva_fase = 1
+	else:
+		nueva_fase = 0
+
+	if nueva_fase != _fase_actual:
+		_fase_actual = nueva_fase
+		_patron_indice = 0
+
+
+func _patron_para_fase_actual() -> Intent:
+	var patron: Array
+	match _fase_actual:
+		0: patron = PATRON_FASE_0
+		1: patron = PATRON_FASE_1
+		2: patron = PATRON_FASE_2
+		_: patron = PATRON_FASE_0
+
+	var intent: Intent = patron[_patron_indice % patron.size()]
+	_patron_indice = (_patron_indice + 1) % patron.size()
+	return _intent_reactivo(intent)
+
+
+func _intent_reactivo(intent_base: Intent) -> Intent:
+	# Si tiene veneno alto, el enemigo huye a defensa
+	if tiene_estado("veneno") and estados_enemigo.get("veneno", 0) >= 3:
+		return Intent.DEFEND
+	# Si el jugador jugó 3+ cartas este turno, el enemigo se pone defensivo
+	if TurnoManager.cartas_jugadas_este_turno >= 3:
+		return Intent.DEFEND
+	# Si el jugador está en pánico, el enemigo presiona
+	if EstadoManager.en_panico:
+		return Intent.ATTACK
+	return intent_base
+
+
 # --- CICLO DE TURNO ---
 
 func decide_next_turn() -> void:
-	current_intent = Intent.values()[randi() % Intent.size()]
-	match current_intent:
-		Intent.ATTACK:
-			intent_value = 8
-		Intent.DEFEND:
-			intent_value = 5
-		Intent.APPLY_STATUS:
-			intent_value = 1
+	# Si hay combo cargado, el siguiente turno SIEMPRE es el golpe fuerte
+	if _combo_cargado:
+		current_intent = Intent.ATTACK
+		intent_value = 18
+		_combo_cargado = false
+	else:
+		current_intent = _patron_para_fase_actual()
+		match current_intent:
+			Intent.ATTACK:
+				var enrage = estados_enemigo.get("enrage", 0)
+				intent_value = int(8 * (1.0 + enrage * 0.25))
+			Intent.DEFEND:
+				intent_value = 5
+			Intent.APPLY_STATUS:
+				intent_value = 1
+			Intent.MULTI_ATTACK:
+				intent_value = 3
+			Intent.BUFF_SELF:
+				intent_value = 2
+			Intent.DEBILITAR:
+				intent_value = 1
+			Intent.COMBO_CARGA:
+				intent_value = 18
+
 	intent_cambiado.emit(current_intent, intent_value)
 	update_ui()
 	_pop_intent()
@@ -139,6 +218,7 @@ func resolver_estados() -> void:
 		recibir_dano(veneno)
 	for nombre in estados_enemigo.keys():
 		estados_enemigo[nombre] = max(0, estados_enemigo[nombre] - 1)
+	# enrage decae separado (no se reduce dos veces si se agregó arriba)
 
 
 func execute_turn() -> void:
@@ -164,12 +244,51 @@ func execute_turn() -> void:
 			else:
 				VidaManager.recibir_dano(dano, "enemigo")
 				RelicManager.intentar_reflejar(dano, self)
+
 		Intent.DEFEND:
 			await _animar_defensa()
 			block += intent_value
+
 		Intent.APPLY_STATUS:
 			await _animar_estado()
 			EstadoManager.aplicar(estado_a_aplicar, -intent_value)
+
+		Intent.MULTI_ATTACK:
+			var dano_por_golpe = intent_value
+			if tiene_estado("debilidad"):
+				dano_por_golpe = max(1, int(dano_por_golpe * 0.5))
+			if EstadoManager.obtener_nivel("vulnerabilidad") > 0:
+				dano_por_golpe = int(dano_por_golpe * 1.5)
+			for _i in range(3):
+				if esta_muerto:
+					break
+				await _animar_ataque()
+				if EstadoManager.obtener_nivel("esquiva") > 0:
+					EstadoManager.aplicar("esquiva", -1)
+					if EstadoManager.obtener_nivel("contraataque") > 0:
+						EstadoManager.aplicar("contraataque", -1)
+						recibir_dano(dano_por_golpe)
+				else:
+					VidaManager.recibir_dano(dano_por_golpe, "enemigo")
+					RelicManager.intentar_reflejar(dano_por_golpe, self)
+				await get_tree().create_timer(0.1).timeout
+
+		Intent.BUFF_SELF:
+			await _animar_buff()
+			aplicar_estado("enrage", intent_value)
+			# En fase 1+, también gana barrera
+			if _fase_actual >= 1:
+				aplicar_estado("barrera", 1)
+
+		Intent.DEBILITAR:
+			await _animar_estado()
+			EstadoManager.aplicar("cordura", -intent_value)
+			EstadoManager.aplicar("vulnerabilidad", intent_value)
+			EstadoManager.aplicar("debilidad", intent_value)
+
+		Intent.COMBO_CARGA:
+			await _animar_carga()
+			_combo_cargado = true
 
 	_reanudar_idle()
 	decide_next_turn()
@@ -180,7 +299,7 @@ func execute_turn() -> void:
 
 func _animar_ataque() -> void:
 	SonidoManager.enemigo_ataca()
-	var direccion_embiste = Vector2(-40, 20)  # ajustá según hacia dónde está el jugador
+	var direccion_embiste = Vector2(-40, 20)
 
 	var tween = create_tween()
 	tween.tween_property(sprite, "position", _pos_base - direccion_embiste * 0.4, 0.18).set_trans(Tween.TRANS_SINE)
@@ -212,17 +331,52 @@ func _animar_estado() -> void:
 	await tween.finished
 
 
+func _animar_buff() -> void:
+	SonidoManager.enemigo_aplica_estado()
+	var tween = create_tween()
+	tween.tween_property(sprite, "scale", _escala_base * 1.3, 0.25).set_trans(Tween.TRANS_BACK)
+	tween.parallel().tween_property(sprite, "modulate", COLOR_BUFF, 0.25)
+	tween.tween_property(sprite, "scale", _escala_base, 0.2).set_trans(Tween.TRANS_SINE)
+	tween.parallel().tween_property(sprite, "modulate", Color.WHITE, 0.2)
+	await tween.finished
+
+
+func _animar_carga() -> void:
+	SonidoManager.enemigo_aplica_estado()
+	var tween = create_tween()
+	# Vibración intensa de advertencia
+	for i in range(5):
+		tween.tween_property(sprite, "position", _pos_base + Vector2(randf_range(-10, 10), randf_range(-10, 10)), 0.04)
+	tween.tween_property(sprite, "position", _pos_base, 0.05)
+	# Crece y se tiñe de rojo intenso
+	tween.parallel().tween_property(sprite, "scale", _escala_base * 1.3, 0.25).set_trans(Tween.TRANS_BACK)
+	tween.parallel().tween_property(sprite, "modulate", COLOR_COMBO, 0.15)
+	tween.tween_property(sprite, "scale", _escala_base, 0.2).set_trans(Tween.TRANS_SINE)
+	tween.parallel().tween_property(sprite, "modulate", Color.WHITE, 0.2)
+	await tween.finished
+
+
 # --- INTERACCIÓN CON CARTAS ---
 
 func recibir_dano(cantidad: int) -> void:
 	if esta_muerto:
 		return
 
+	# Barrera: solo se rompe con un ataque perfecto
+	if tiene_estado("barrera"):
+		if SkillCheckManager.ultimo_resultado != "perfect":
+			_flash(Color(0.6, 0.6, 1))  # flash azul = golpe absorbido por barrera
+			_squish()
+			return
+		else:
+			estados_enemigo["barrera"] = 0  # barrera rota por golpe perfect
+
 	var dano_restante = max(cantidad - block, 0)
 	block = max(block - cantidad, 0)
 	current_hp = max(current_hp - dano_restante, 0)
 
 	hp_cambiado.emit(current_hp, max_hp)
+	_verificar_cambio_fase()
 	update_ui()
 
 	if dano_restante > 0:
@@ -239,7 +393,6 @@ func recibir_dano(cantidad: int) -> void:
 		morir()
 		return
 
-	# recalcular si la respiración debe agitarse por HP bajo
 	_pausar_idle()
 	_reanudar_idle()
 
@@ -289,7 +442,18 @@ func _pop_intent() -> void:
 
 
 func update_ui() -> void:
-	hp_label.text = "HP: %d/%d | Escudo: %d" % [current_hp, max_hp, block]
+	var escudo_str = ""
+	if block > 0:
+		escudo_str = " | Escudo: %d" % block
+	var enrage = estados_enemigo.get("enrage", 0)
+	var enrage_str = ""
+	if enrage > 0:
+		enrage_str = " | Enrage: %d" % enrage
+	var barrera_str = ""
+	if tiene_estado("barrera"):
+		barrera_str = " | [Barrera]"
+	hp_label.text = "HP: %d/%d%s%s%s" % [current_hp, max_hp, escudo_str, enrage_str, barrera_str]
+
 	match current_intent:
 		Intent.ATTACK:
 			intent_label.text = "Atacará (%d)" % intent_value
@@ -303,3 +467,19 @@ func update_ui() -> void:
 			intent_label.text = "Aplicará Estado (%s)" % estado_a_aplicar
 			intent_icono.texture = ICONO_ESTADO
 			intent_label.modulate = COLOR_ESTADO
+		Intent.MULTI_ATTACK:
+			intent_label.text = "Multi-Golpe (3x%d)" % intent_value
+			intent_icono.texture = ICONO_MULTI
+			intent_label.modulate = COLOR_MULTI
+		Intent.BUFF_SELF:
+			intent_label.text = "Se fortalece (+%d enrage)" % intent_value
+			intent_icono.texture = ICONO_ESTADO
+			intent_label.modulate = COLOR_BUFF
+		Intent.DEBILITAR:
+			intent_label.text = "Debilitará (cord/vuln/deb)"
+			intent_icono.texture = ICONO_ESTADO
+			intent_label.modulate = COLOR_DEBILITAR
+		Intent.COMBO_CARGA:
+			intent_label.text = "¡Cargando! Próx: %d dmg" % intent_value
+			intent_icono.texture = ICONO_ATAQUE
+			intent_label.modulate = COLOR_COMBO

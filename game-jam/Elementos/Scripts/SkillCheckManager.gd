@@ -4,6 +4,7 @@ extends Node
 const BONUS_ESCUDO_REBOTE := 2
 
 var instancia: Node = null
+var ultimo_resultado: String = "normal"
 
 
 func registrar(nodo: Node) -> void:
@@ -23,7 +24,8 @@ func ejecutar_check() -> Dictionary:
 		return {"success": true, "tipo": "normal"}
 
 	instancia.start_check()
-	var resultado = await instancia.check_finished  
+	var resultado = await instancia.check_finished
 	var success: bool = resultado[0]
 	var tipo: String = resultado[1]
+	ultimo_resultado = tipo
 	return {"success": success, "tipo": tipo}

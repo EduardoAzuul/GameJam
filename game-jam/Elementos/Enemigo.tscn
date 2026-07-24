@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b6cbjuhirsu0o" path="res://Elementos/Scripts/Enemigo.gd" id="1_x22yk"]
 [ext_resource type="Shader" uid="uid://muvjosdse584" path="res://Shaders/SinWave.gdshader" id="2_bbsev"]
-[ext_resource type="Texture2D" uid="uid://ok2eqxf81h2k" path="res://Assets/enemigoTemporal.jpg" id="2_nmhiy"]
+[ext_resource type="Texture2D" uid="uid://dbx1b8oeka2ic" path="res://Assets/Enemigos/Amalgama_SomraCuernos.png" id="3_bbsev"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uyhjw"]
 shader = ExtResource("2_bbsev")
@@ -19,9 +19,9 @@ script = ExtResource("1_x22yk")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1143737326]
 material = SubResource("ShaderMaterial_uyhjw")
-position = Vector2(180, 178)
+position = Vector2(196, 259)
 scale = Vector2(0.24809782, 0.24809782)
-texture = ExtResource("2_nmhiy")
+texture = ExtResource("3_bbsev")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1614926936]
 position = Vector2(288.125, 203.375)
@@ -59,6 +59,14 @@ offset_left = 203.0
 offset_top = 107.0
 offset_right = 352.0
 offset_bottom = 256.0
+
+[node name="Estados" type="Label" parent="UI" unique_id=364822010]
+layout_mode = 0
+offset_left = -77.0
+offset_top = 267.0
+offset_right = -17.0
+offset_bottom = 290.0
+text = "Estados"
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=1049007078]
 visible = false
