@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Elementos/Scripts/SonidoManager.gd" id="1_smgr"]
+
+[node name="SonidoManager" type="Node"]
+script = ExtResource("1_smgr")
+
+[node name="JugadorAtaca" type="AudioStreamPlayer" parent="."]
+
+[node name="JugadorDefiende" type="AudioStreamPlayer" parent="."]
+
+[node name="JugadorCuraVida" type="AudioStreamPlayer" parent="."]
+
+[node name="JugadorPierdeVida" type="AudioStreamPlayer" parent="."]
+
+[node name="JugadorGanaCordura" type="AudioStreamPlayer" parent="."]
+
+[node name="JugadorPierdeCordura" type="AudioStreamPlayer" parent="."]
+
+[node name="EstadoAplicado" type="AudioStreamPlayer" parent="."]
+
+[node name="EnemigoRecibeDanio" type="AudioStreamPlayer" parent="."]
+
+[node name="EnemigoMuere" type="AudioStreamPlayer" parent="."]
+
+[node name="EnemigoAtaca" type="AudioStreamPlayer" parent="."]
+
+[node name="EnemigoDefiende" type="AudioStreamPlayer" parent="."]
+
+[node name="EnemigoAplicaEstado" type="AudioStreamPlayer" parent="."]
+
+[node name="Panico" type="AudioStreamPlayer" parent="."]

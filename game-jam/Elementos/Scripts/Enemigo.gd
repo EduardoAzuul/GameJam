@@ -179,6 +179,7 @@ func execute_turn() -> void:
 # --- ANIMACIONES DE ACCIÓN ---
 
 func _animar_ataque() -> void:
+	SonidoManager.enemigo_ataca()
 	var direccion_embiste = Vector2(-40, 20)  # ajustá según hacia dónde está el jugador
 
 	var tween = create_tween()
@@ -192,6 +193,7 @@ func _animar_ataque() -> void:
 
 
 func _animar_defensa() -> void:
+	SonidoManager.enemigo_defiende()
 	var tween = create_tween()
 	tween.tween_property(sprite, "scale", _escala_base * 1.2, 0.2).set_trans(Tween.TRANS_BACK)
 	tween.parallel().tween_property(sprite, "modulate", COLOR_DEFENSA, 0.2)
@@ -199,6 +201,7 @@ func _animar_defensa() -> void:
 
 
 func _animar_estado() -> void:
+	SonidoManager.enemigo_aplica_estado()
 	_pulso_paranormal_temporal()
 	var tween = create_tween()
 	for i in range(3):
@@ -222,6 +225,8 @@ func recibir_dano(cantidad: int) -> void:
 	hp_cambiado.emit(current_hp, max_hp)
 	update_ui()
 
+	if dano_restante > 0:
+		SonidoManager.enemigo_recibe_danio()
 	_mostrar_numero_flotante(dano_restante)
 	_squish()
 	_flash(Color(1, 0.3, 0.3) if dano_restante > 0 else Color(0.6, 0.6, 1))
@@ -266,6 +271,7 @@ func morir() -> void:
 		return
 	esta_muerto = true
 	_pausar_idle()
+	SonidoManager.enemigo_muere()
 	enemigo_murio.emit()
 
 	var tween = create_tween().set_parallel(true)

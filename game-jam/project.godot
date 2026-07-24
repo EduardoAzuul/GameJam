@@ -23,6 +23,7 @@ EstadoManager="*uid://cqlv1s80dn62y"
 TurnoManager="*uid://datyblgqrx4fc"
 RelicManager="*uid://dm2w1g32sjgny"
 SkillCheckManager="*uid://d3togu7y8wxf3"
+SonidoManager="*res://Escenas/SonidoManager.tscn"
 
 [display]
 

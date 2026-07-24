@@ -61,6 +61,7 @@ func jugar_carta(carta: Carta, enemigo_objetivo: Node) -> bool:
 						if enemigo_objetivo.tiene_estado("vulnerabilidad"):
 							hit_dano = int(hit_dano * 1.5)
 						enemigo_objetivo.recibir_dano(RelicManager.calcular_dano_con_primer_golpe(hit_dano))
+						SonidoManager.jugador_ataca()
 				else:
 					if not is_instance_valid(enemigo_objetivo):
 						break
@@ -74,8 +75,10 @@ func jugar_carta(carta: Carta, enemigo_objetivo: Node) -> bool:
 					if enemigo_objetivo.tiene_estado("vulnerabilidad"):
 						valor_final = int(valor_final * 1.5)
 					enemigo_objetivo.recibir_dano(RelicManager.calcular_dano_con_primer_golpe(valor_final))
+					SonidoManager.jugador_ataca()
 			Efecto.TipoEfecto.DEFENDER:
 				VidaManager.ganar_escudo(valor_final)
+				SonidoManager.jugador_defiende()
 			Efecto.TipoEfecto.CURAR:
 				var cura = efecto.valor
 				if efecto.aleatorio:
